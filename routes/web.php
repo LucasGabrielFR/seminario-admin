@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('admin/home', [AdminController::class, 'index'])->name('home');
+Route::get('/', [AdminController::class, 'index'])->name('home');
 
 // Books routes
 Route::get('admin/library', [BookController::class, 'index'])->name('library');

@@ -317,7 +317,7 @@ return [
         // ],
         [
             'text' => 'Home',
-            'url'  => 'admin/home',
+            'url'  => '/',
             'icon' => 'fas fa-fw fa-church',
         ],
         [
