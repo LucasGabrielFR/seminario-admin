@@ -74,7 +74,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="isbn">ISBN</label>
-                    <input type="text" class="form-control" name="isbn" id="isbn"
+                    <input type="text" class="form-control" name="isbn" id="isbn" onchange="checkISBN(this.value)"
                         value="{{ $book->isbn ?? '' }}">
                 </div>
             </div>
@@ -150,5 +150,39 @@
             placeholder: $(this).data('placeholder'),
             closeOnSelect: false,
         });
+        function checkISBN(isbn) {
+        // Construa a URL da API do Google Books com o ISBN fornecido
+        let url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`;
+
+        // Faça uma solicitação AJAX para a API do Google Books
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar livro.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Manipule os dados recebidos, por exemplo, exiba-os no console
+                var info = data.items[0].volumeInfo;
+                var author = info.authors[0];
+                var title = info.title;
+                var pageNum = info.pageCount;
+                var publisher = info.publisher;
+                var publish = info.publishedDate;
+
+
+                document.getElementById("author").value = author;
+                document.getElementById("name").value = title;
+                document.getElementById("page_num").value = pageNum;
+                document.getElementById("publisher").value = publisher;
+                document.getElementById("publish").value = publish;
+
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    }
+
     </script>
 @stop
