@@ -38,6 +38,6 @@ class UserRepository
     public function getUserById($id)
     {
 
-        return $this->entity->find($id)->first();
+        return $this->entity->find($id);
     }
 }

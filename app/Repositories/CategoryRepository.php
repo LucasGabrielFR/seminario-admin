@@ -38,6 +38,6 @@ class CategoryRepository
     public function getCategory($id)
     {
 
-        return $this->entity->find($id)->first();
+        return $this->entity->find($id);
     }
 }

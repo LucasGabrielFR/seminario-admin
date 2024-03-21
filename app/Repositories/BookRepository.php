@@ -21,7 +21,7 @@ class BookRepository
 
     public function getBookById($id)
     {
-        return $this->entity->find($id)->first();
+        return $this->entity->find($id);
     }
 
     public function deleteBook($book)
