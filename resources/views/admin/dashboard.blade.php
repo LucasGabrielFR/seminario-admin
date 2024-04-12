@@ -12,13 +12,16 @@
 @section('content')
     <div class="row">
         <div class="col-4">
-            <x-adminlte-small-box title="Seminaristas" text="{{ $countSeminaristas }}" icon="fas fa-user text-white" theme="teal" />
+            <x-adminlte-small-box title="Seminaristas" text="{{ $countSeminaristas }}" icon="fas fa-user text-white"
+                theme="teal" url="{{ route('users') }}" />
         </div>
         <div class="col-4">
-            <x-adminlte-small-box title="Livros" text="{{ $countBooks }}" icon="fas fa-book  text-white" theme="info" />
+            <x-adminlte-small-box title="Livros" text="{{ $countBooks }}" icon="fas fa-book  text-white" theme="info"
+                url="{{ route('library') }}" />
         </div>
         <div class="col-4">
-            <x-adminlte-small-box title="Empréstimos" text="{{ $countLoans }}" icon="fas fa-address-card text-white" theme="dark" />
+            <x-adminlte-small-box title="Empréstimos" text="{{ $countLoans }}" icon="fas fa-address-card text-white"
+                theme="dark" url="{{ route('loans') }}" />
         </div>
     </div>
 @stop
