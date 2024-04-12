@@ -20,4 +20,9 @@ class BookCategoryRepository
             'category_id' => $category_id
         ]);
     }
+
+    public function deleteByBook($book_id)
+    {
+        $this->entity->where('book_id', $book_id)->delete();
+    }
 }

@@ -75,6 +75,19 @@ class BookController extends Controller
     {
 
         $book = $this->repository->getBookById($id);
+
+        $dados = $request->all();
+        $categorias = $dados['categories'];
+        unset($dados['categories']);
+
+        $bookCategoryRepo = new BookCategoryRepository(new BookCategory());
+
+        $bookCategoryRepo->deleteByBook($id);
+
+        foreach ($categorias as $categoria) {
+            $bookCategoryRepo->create($id, $categoria);
+        }
+
         if(!$book)
             return redirect()->back();
 
