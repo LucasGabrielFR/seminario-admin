@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Seminaristas')
+@section('title', 'Usuários')
 
 @section('content_header')
-    <h1>Seminaristas</h1>
-    <a href="{{ route('user.create') }}" class="btn btn-dark">Novo Seminarista</a>
+    <h1>Usuários</h1>
+    <a href="{{ route('user.create') }}" class="btn btn-dark">Novo Usuário</a>
 @stop
 
 @section('content')

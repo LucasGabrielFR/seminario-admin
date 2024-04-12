@@ -331,7 +331,7 @@ return [
             'url'  => 'admin/categories',
         ],
         [
-            'text'    => 'Seminaristas',
+            'text'    => 'Usuários',
             'icon'    => 'fas fa-fw fa-user',
             'url'  => 'admin/users',
         ],
