@@ -17,12 +17,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="name">Nome do Livro<small>*</small></label>
-                    <select name="book_id" id="book_id" class="form-control" required>
-                        <option value="">Selecione</option>
+                    <select type="text" name="book_id" id="book_id" class="form-control" list="list-books"
+                        required>
+
                         @foreach ($books as $book)
                             <option value="{{ $book->id }}">{{ $book->name }}</option>
                         @endforeach
                     </select>
+
                 </div>
             </div>
         </div>
@@ -41,3 +43,16 @@
         <button type="submit" class="btn btn-dark">Salvar</button>
     </div>
 </div>
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#book_id').select2({
+                theme: 'classic',
+            });
+            $('#user_id').select2({
+                theme: 'classic',
+            });
+
+        });
+    </script>
+@stop
