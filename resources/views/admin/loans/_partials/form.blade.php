@@ -19,7 +19,7 @@
                     <label for="name">Nome do Livro<small>*</small></label>
                     <select type="text" name="book_id" id="book_id" class="form-control" list="list-books"
                         required>
-
+                        <option value="">Selecione</option>
                         @foreach ($books as $book)
                             <option value="{{ $book->id }}">{{ $book->name }}</option>
                         @endforeach
