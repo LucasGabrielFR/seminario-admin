@@ -16,7 +16,7 @@ class LoanRepository
 
     public function getAllLoans()
     {
-        return $this->entity->orderBy('date_return')->get();
+        return $this->entity->orderBy('status')->get();
     }
 
     public function createLoan($loan)
