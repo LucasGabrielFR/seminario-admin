@@ -13,7 +13,7 @@
 
         $config = [
             'data' => $loans,
-            'order' => [[8, 'desc']],
+            'order' => [[7, 'desc']],
             'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
         ];
     @endphp
