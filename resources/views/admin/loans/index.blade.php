@@ -70,7 +70,7 @@
          $(document).ready(function() {
             var table = $('#table1').DataTable();
 
-            table.order([6, 'asc']).draw();
+            table.order([6, 'desc']).draw();
         });
     </script>
 @stop
