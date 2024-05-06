@@ -65,3 +65,12 @@
         </div>
     </div>
 @stop
+@section('js')
+    <script>
+         $(document).ready(function() {
+            var table = $('#table1').DataTable();
+
+            table.order([6, 'asc']).draw();
+        });
+    </script>
+@stop
