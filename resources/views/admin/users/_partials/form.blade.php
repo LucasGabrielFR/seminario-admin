@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Nome do Seminarista<small>*</small></label>
+                    <label for="name">Nome do Usuário<small>*</small></label>
                     <input type="text" class="form-control" name="name" id="name"
                         value="{{ $user->name ?? '' }}" required>
                 </div>
