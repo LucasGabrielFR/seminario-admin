@@ -334,6 +334,7 @@ return [
             'text'    => 'Usuários',
             'icon'    => 'fas fa-fw fa-user',
             'url'  => 'admin/users',
+            // 'can' => 'isAdmin',
         ],
         [
             'text'    => 'Empréstimos',
@@ -344,10 +345,12 @@ return [
             'text'    => 'Permissões',
             'icon'    => 'fas fa-fw fa-key',
             'url'  => 'admin/permissions',
+            'can' => 'isAdmin',
         ],
         [
             'text'    => 'Secretaria Acadêmica',
             'icon'    => 'fas fa-fw fa-graduat',
+            'can' => 'isAdmin',
             'submenu' => [
                 [
                     'text' => 'Cursos',

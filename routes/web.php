@@ -45,16 +45,6 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/categories/category', [CategoryController::class, 'store'])->name('category.store');
     Route::delete('admin/categories/category/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 
-    //Users routes
-    Route::middleware(['isAdmin'])->group(function () {
-        Route::get('admin/users', [UserController::class, 'index'])->name('users');
-        Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
-        Route::get('admin/users/user/{id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
-        Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
-        Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
-    });
-
     //Loan routes
     Route::get('admin/loans', [LoanController::class, 'index'])->name('loans');
     Route::get('admin/loans/create', [LoanController::class, 'create'])->name('loan.create');
@@ -65,13 +55,31 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/loans/loan', [LoanController::class, 'store'])->name('loan.store');
     Route::delete('admin/loans/loan/{id}', [LoanController::class, 'delete'])->name('loan.delete');
 
-    //Permission Routes
-    Route::get('admin/permissions', [PermissionController::class, 'index'])->name('permissions');
-    Route::get('admin/permissions/create', [PermissionController::class, 'create'])->name('permission.create');
-    Route::get('admin/permissions/permission/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
-    Route::put('admin/permissions/permission/{id}', [PermissionController::class, 'update'])->name('permission.update');
-    Route::post('admin/permissions/permission', [PermissionController::class, 'store'])->name('permission.store');
-    Route::delete('admin/permissions/permission/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+    Route::get('admin/users', [UserController::class, 'index'])->name('users');
+    Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
+    Route::get('admin/users/user/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
+    Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+    Route::middleware(['isAdmin'])->group(function () {
+        //Users routes
+        // Route::get('admin/users', [UserController::class, 'index'])->name('users');
+        // Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
+        // Route::get('admin/users/user/{id}', [UserController::class, 'edit'])->name('user.edit');
+        // Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
+        // Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
+        // Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+
+        //Permission Routes
+        Route::get('admin/permissions', [PermissionController::class, 'index'])->name('permissions');
+        Route::get('admin/permissions/create', [PermissionController::class, 'create'])->name('permission.create');
+        Route::get('admin/permissions/permission/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+        Route::put('admin/permissions/permission/{id}', [PermissionController::class, 'update'])->name('permission.update');
+        Route::post('admin/permissions/permission', [PermissionController::class, 'store'])->name('permission.store');
+        Route::delete('admin/permissions/permission/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+    });
 });
 Route::get('/', function () {
     return redirect('/login');

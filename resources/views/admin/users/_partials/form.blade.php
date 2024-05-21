@@ -81,6 +81,15 @@
         </div>
         <hr>
         <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="password">Senha<small>*</small></label>
+                    <input type="text" class="form-control" name="password" id="password" required>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
             <div class="col-md-12">
                 <label for="permissions">Permissões</label>
                 <select class="form-select" id="multiple-select-optgroup-field" data-placeholder="Escolha as Permissões"
