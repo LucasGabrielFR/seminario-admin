@@ -27,10 +27,11 @@ class LoanRepository
     public function returnLoan($id)
     {
         $loan = $this->entity->find($id);
-        $loan->update([
-            'status' => 2,
-            'date_return' => date('Y-m-d H:i:s')
-        ]);
+        $loan->status = 2;
+        $loan->date_return = date('Y-m-d H:i:s');
+        $loan->save();
+
+        return $loan;
     }
 
     public function extendMin($id)
@@ -38,21 +39,25 @@ class LoanRepository
         $loan = $this->entity->find($id);
 
         $newLimitDate = date('Y-m-d', strtotime('+7 days'));
+        $loan->date_limit = $newLimitDate;
+        $loan->save();
 
-        $loan->update([
-            'date_limit' => $newLimitDate
-        ]);
+        $loan->date_limit = date('d/m/Y', strtotime($loan->date_limit));
+
+        return $loan;
     }
 
-
     public function extendMax($id)
-    {$loan = $this->entity->find($id);
+    {
+        $loan = $this->entity->find($id);
 
         $newLimitDate = date('Y-m-d', strtotime('+15 days'));
+        $loan->date_limit = $newLimitDate;
+        $loan->save();
 
-        $loan->update([
-            'date_limit' => $newLimitDate
-        ]);
+        $loan->date_limit = date('d/m/Y', strtotime($loan->date_limit));
+
+        return $loan;
     }
 
     public function deleteCategory($category)

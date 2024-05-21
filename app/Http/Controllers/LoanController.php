@@ -18,7 +18,8 @@ class LoanController extends Controller
         $this->repository = $loanRepository;
     }
 
-    public function index(){
+    public function index()
+    {
 
         $loans = $this->repository->getAllLoans();
 
@@ -27,7 +28,8 @@ class LoanController extends Controller
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         $userRepo = new UserRepository(new User());
         $users = $userRepo->getAllUsers();
 
@@ -40,7 +42,8 @@ class LoanController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $loan = $request->all();
         $loan['status'] = 1;
         $loan['date_loan'] = date('Y-m-d H:i:s');
@@ -49,18 +52,21 @@ class LoanController extends Controller
         return redirect()->route('loans');
     }
 
-    public function return($id){
+    public function return($id)
+    {
         $loan = $this->repository->returnLoan($id);
-        return redirect()->route('loans');
+        return response()->json(['loan' => $loan, 'message' => 'Empréstimo finalizado']);
     }
 
-    public function extendMin($id){
+    public function extendMin($id)
+    {
         $loan = $this->repository->extendMin($id);
-        return redirect()->route('loans');
+        return response()->json(['loan' => $loan, 'message' => 'Empréstimo prorrogado por 7 dias']);
     }
 
-    public function extendMax($id){
+    public function extendMax($id)
+    {
         $loan = $this->repository->extendMax($id);
-        return redirect()->route('loans');
+        return response()->json(['loan' => $loan, 'message' => 'Empréstimo prorrogado por 15 dias']);
     }
 }
