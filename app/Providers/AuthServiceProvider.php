@@ -26,12 +26,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('seminarista', function(User $user){
-            return $user->permissions() === 2;
-        });
+        // Gate::define('seminarista', function(User $user){
+        //     return $user->permissions() === 2;
+        // });
 
-        Gate::define('admin', function(User $user){
-            return $user->permissions() === 1;
+        Gate::define('admin', function (User $user) {
+            $isAdmin = false;
+            foreach ($user->permissions as $permission) {
+                if ((int)$permission->id === 1) {
+                    $isAdmin = true;
+                    break;
+                }
+            }
+            return $isAdmin;
         });
     }
 }
