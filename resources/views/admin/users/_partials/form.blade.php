@@ -1,3 +1,11 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+<!-- Or for RTL support -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
+
 <div class="row">
     <div class="col-md-auto">
         <div class="row">
@@ -71,6 +79,20 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="permissions">Permissões</label>
+                <select class="form-select" id="multiple-select-optgroup-field" data-placeholder="Escolha as Permissões"
+                    multiple name="permissions[]">
+                    @foreach ($permissions as $permission)
+                        <option value="{{ $permission->id }}" @if (isset($user->permissions) && in_array($permission->id, $user->permissions->pluck('id')->toArray())) selected @endif>
+                            {{ $permission->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <hr>
         <div class="row">
             <div class="col-md-2">
                 <button type="submit" class="btn btn-dark">Salvar</button>
@@ -79,3 +101,19 @@
 
     </div>
 </div>
+
+@section('js')
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script>
+        $('#multiple-select-optgroup-field').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: false,
+        });
+    </script>
+
+@stop

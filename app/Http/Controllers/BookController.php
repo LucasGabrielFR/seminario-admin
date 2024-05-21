@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\GoogleDrive;
 use App\Repositories\BookRepository;
 use App\Repositories\BookCategoryRepository;
 use App\Models\BookCategory;
@@ -21,6 +22,7 @@ class BookController extends Controller
     public function index()
     {
         $books = $this->repository->getAllBooks();
+
         return view('admin.books.index', [
             'books' => $books
         ]);

@@ -65,4 +65,9 @@ class User extends Authenticatable
             ->using(Loan::class)
             ->withPivot(['date_loan', 'date_return', 'date_limit', 'status']);
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'user_permissions', 'user_id', 'permission_id');
+    }
 }

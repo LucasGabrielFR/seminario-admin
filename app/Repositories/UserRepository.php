@@ -21,7 +21,7 @@ class UserRepository
 
     public function createUser($user)
     {
-        $this->entity->create($user);
+        return $this->entity->create($user);
     }
 
     public function updateUser(Request $request, $id)

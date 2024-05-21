@@ -193,7 +193,7 @@ return [
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
+    'classes_sidebar_nav' => 'nav-flat',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
@@ -256,9 +256,9 @@ return [
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
-    'password_reset_url' => 'password/reset',
-    'password_email_url' => 'password/email',
+    'register_url' => '',
+    'password_reset_url' => '',
+    'password_email_url' => '',
     'profile_url' => false,
 
     /*
@@ -317,7 +317,7 @@ return [
         // ],
         [
             'text' => 'Home',
-            'url'  => '/',
+            'url'  => '/home',
             'icon' => 'fas fa-fw fa-church',
         ],
         [
@@ -339,6 +339,32 @@ return [
             'text'    => 'Empréstimos',
             'icon'    => 'fas fa-fw fa-address-card',
             'url'  => 'admin/loans',
+        ],
+        [
+            'text'    => 'Permissões',
+            'icon'    => 'fas fa-fw fa-key',
+            'url'  => 'admin/permissions',
+        ],
+        [
+            'text'    => 'Secretaria Acadêmica',
+            'icon'    => 'fas fa-fw fa-graduat',
+            'submenu' => [
+                [
+                    'text' => 'Cursos',
+                    'url'  => 'admin/alunos',
+                    'shift' => 'ml-4',
+                ],
+                [
+                    'text' => 'Grade de Aulas',
+                    'url'  => 'admin/alunos',
+                    'shift' => 'ml-4',
+                ],
+                [
+                    'text' => 'Disciplinas',
+                    'url'  => 'admin/alunos',
+                    'shift' => 'ml-4',
+                ],
+            ],
         ],
         // ['header' => 'labels'],
         // [

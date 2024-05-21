@@ -37,7 +37,6 @@ class CategoryRepository
 
     public function getCategory($id)
     {
-
         return $this->entity->find($id);
     }
 }
