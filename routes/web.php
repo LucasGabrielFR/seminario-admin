@@ -55,21 +55,14 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/loans/loan', [LoanController::class, 'store'])->name('loan.store');
     Route::delete('admin/loans/loan/{id}', [LoanController::class, 'delete'])->name('loan.delete');
 
-    Route::get('admin/users', [UserController::class, 'index'])->name('users');
-    Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
-    Route::get('admin/users/user/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
-    Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
-
     Route::middleware(['isAdmin'])->group(function () {
         //Users routes
-        // Route::get('admin/users', [UserController::class, 'index'])->name('users');
-        // Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
-        // Route::get('admin/users/user/{id}', [UserController::class, 'edit'])->name('user.edit');
-        // Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
-        // Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
-        // Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
+        Route::get('admin/users', [UserController::class, 'index'])->name('users');
+        Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
+        Route::get('admin/users/user/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
+        Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
 
 
         //Permission Routes

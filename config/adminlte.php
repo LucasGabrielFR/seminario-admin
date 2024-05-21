@@ -334,7 +334,7 @@ return [
             'text'    => 'Usuários',
             'icon'    => 'fas fa-fw fa-user',
             'url'  => 'admin/users',
-            // 'can' => 'isAdmin',
+            'can' => 'isAdmin',
         ],
         [
             'text'    => 'Empréstimos',

@@ -83,8 +83,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="password">Senha<small>*</small></label>
-                    <input type="text" class="form-control" name="password" id="password" required>
+                    <label for="password">Senha</label>
+                    <input type="password" class="form-control" name="password" id="password">
                 </div>
             </div>
         </div>
