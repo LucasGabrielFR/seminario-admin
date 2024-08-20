@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
@@ -37,7 +38,10 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::put('admin/book/{id}', [BookController::class, 'update'])->name('book.update');
     Route::delete('admin/book/{id}', [BookController::class, 'delete'])->name('book.delete');
 
-    //Cetegories routes
+    //Digital Library
+    Route::get('admin/digital-library', [BookController::class, 'digitalLibrary'])->name('digital-library');
+
+    //Categories routes
     Route::get('admin/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('admin/categories/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('admin/categories/category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
@@ -54,6 +58,11 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::put('admin/loans/loan/{id}', [LoanController::class, 'update'])->name('loan.update');
     Route::post('admin/loans/loan', [LoanController::class, 'store'])->name('loan.store');
     Route::delete('admin/loans/loan/{id}', [LoanController::class, 'delete'])->name('loan.delete');
+
+    //Courses routes
+    Route::get('admin/courses', [CourseController::class, 'index'])->name('courses');
+    Route::get('admin/courses/create', [CourseController::class, 'create'])->name('course.create');
+    Route::post('admin/courses/course', [CourseController::class, 'store'])->name('course.store');
 
     Route::middleware(['isAdmin'])->group(function () {
         //Users routes

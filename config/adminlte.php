@@ -326,6 +326,11 @@ return [
             'url'  => 'admin/library',
         ],
         [
+            'text'    => 'Biblioteca Digital',
+            'icon'    => 'fab fa-fw fa-google-drive',
+            'url'  => 'admin/digital-library',
+        ],
+        [
             'text'    => 'Categorias de Livros',
             'icon'    => 'fab fa-fw fa-readme',
             'url'  => 'admin/categories',
@@ -349,12 +354,12 @@ return [
         ],
         [
             'text'    => 'Secretaria Acadêmica',
-            'icon'    => 'fas fa-fw fa-graduat',
+            'icon'    => 'fas fa-fw fa-graduation-cap',
             'can' => 'admin',
             'submenu' => [
                 [
                     'text' => 'Cursos',
-                    'url'  => 'admin/alunos',
+                    'url'  => 'admin/courses',
                     'shift' => 'ml-4',
                 ],
                 [

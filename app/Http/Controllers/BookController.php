@@ -116,4 +116,8 @@ class BookController extends Controller
             'book' => $book
         ]);
     }
+
+    public function digitalLibrary(){
+        return view('admin.digital-library.index');
+    }
 }
