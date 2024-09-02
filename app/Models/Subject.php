@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\UuidTrait;
 
-class Course extends Model
+class Subject extends Model
 {
     use HasFactory, UuidTrait;
 
@@ -16,11 +16,13 @@ class Course extends Model
 
     protected $fillable = [
         'name',
-        'code'
+        'code',
+        'credits',
+        'course_id'
     ];
 
-    public function subjects()
+    public function course()
     {
-        return $this->hasMany(Subject::class);
+        return $this->belongsTo(Course::class);
     }
 }

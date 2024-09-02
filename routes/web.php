@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +64,18 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('admin/courses', [CourseController::class, 'index'])->name('courses');
     Route::get('admin/courses/create', [CourseController::class, 'create'])->name('course.create');
     Route::post('admin/courses/course', [CourseController::class, 'store'])->name('course.store');
+    Route::get('admin/courses/course/{id}', [CourseController::class, 'edit'])->name('course.edit');
+    Route::put('admin/courses/course/{id}', [CourseController::class, 'update'])->name('course.update');
+    // Route::delete('admin/courses/course/{id}', [CourseController::class, 'delete'])->name('course.delete');
+    Route::get('admin/courses/view/{id}', [CourseController::class, 'view'])->name('course.view');
+
+    //Subjects routes
+    Route::get('admin/{id}/subjects', [SubjectController::class, 'create'])->name('subject.create');
+    Route::post('admin/subjects/subject', [SubjectController::class, 'store'])->name('subject.store');
+    Route::get('admin/subjects/subject/{id}', [SubjectController::class, 'edit'])->name('subject.edit');
+    Route::put('admin/subjects/subject/{id}', [SubjectController::class, 'update'])->name('subject.update');
+    Route::delete('admin/subjects/subject/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
+
 
     Route::middleware(['isAdmin'])->group(function () {
         //Users routes

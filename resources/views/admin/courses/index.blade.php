@@ -26,11 +26,11 @@
                         <td>{{ $course->code }}</td>
                         <td>
                             <a class="btn btn-xs btn-outline-primary mx-1 shadow"
-                                href="{{ route('category.edit', $course->id) }}">
+                                href="{{ route('course.edit', $course->id) }}">
                                 <i class="fa fa-lg fa-fw fa-pen"></i> Editar
                             </a>
                             <a class="btn btn-xs btn-outline-info mx-1 shadow"
-                                href="{{ route('category.edit', $course->id) }}">
+                                href="{{ route('course.view', $course->id) }}">
                                 <i class="fa fa-lg fa-fw fa-eye"></i> Ver
                             </a>
                             <x-modal url="{{ route('category.delete', $course->id) }}" id="{{ $course->id }}"

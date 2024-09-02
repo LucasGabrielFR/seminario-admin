@@ -23,7 +23,8 @@ class CourseController extends Controller
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('admin.courses.create');
     }
 
@@ -31,5 +32,39 @@ class CourseController extends Controller
     {
         $this->repository->createCourse($request);
         return redirect()->route('courses');
+    }
+
+    public function edit($id)
+    {
+        $course = $this->repository->getCourse($id);
+
+        if (!$course)
+            return redirect()->back();
+
+        return view('admin.courses.edit', [
+            'course' => $course
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $course = $this->repository->getCourse($id);
+        if (!$course)
+            return redirect()->back();
+
+        $this->repository->updateCourse($request, $id);
+        return redirect()->route('courses');
+    }
+
+    public function view($id)
+    {
+
+        $course = $this->repository->getCourse($id);
+        if (!$course)
+            return redirect()->back();
+
+        return view('admin.courses.view', [
+            'course' => $course
+        ]);
     }
 }

@@ -23,4 +23,15 @@ class CourseRepository
     {
         $this->entity->create($request->all());
     }
+
+    public function getCourse($id)
+    {
+        return $this->entity->find($id);
+    }
+
+    public function updateCourse(Request $request, $id)
+    {
+        $course = $this->entity->find($id);
+        $course->update($request->all());
+    }
 }
