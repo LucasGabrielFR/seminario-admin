@@ -34,4 +34,13 @@ class SubjectRepository
         $subject = $this->entity->find($id);
         $subject->update($request->all());
     }
+
+    function getSubjectByCode($code) {
+        return $this->entity->where('code', $code)->first();
+    }
+
+    public function deleteSubject($subject)
+    {
+        $subject->delete();
+    }
 }

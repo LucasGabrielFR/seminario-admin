@@ -66,7 +66,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/courses/course', [CourseController::class, 'store'])->name('course.store');
     Route::get('admin/courses/course/{id}', [CourseController::class, 'edit'])->name('course.edit');
     Route::put('admin/courses/course/{id}', [CourseController::class, 'update'])->name('course.update');
-    // Route::delete('admin/courses/course/{id}', [CourseController::class, 'delete'])->name('course.delete');
+    Route::delete('admin/courses/course/{id}', [CourseController::class, 'delete'])->name('course.delete');
     Route::get('admin/courses/view/{id}', [CourseController::class, 'view'])->name('course.view');
 
     //Subjects routes
@@ -75,6 +75,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('admin/subjects/subject/{id}', [SubjectController::class, 'edit'])->name('subject.edit');
     Route::put('admin/subjects/subject/{id}', [SubjectController::class, 'update'])->name('subject.update');
     Route::delete('admin/subjects/subject/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
+    Route::get('admin/subjects/check-code/{code}', [SubjectController::class, 'checkCode'])->name('subject.check-code');
 
 
     Route::middleware(['isAdmin'])->group(function () {

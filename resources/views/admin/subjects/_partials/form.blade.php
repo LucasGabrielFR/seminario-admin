@@ -1,4 +1,4 @@
-<input type="hidden" name="course_id" value="{{ $courseId}}">
+<input type="hidden" name="course_id" value="{{ $courseId ?? $subject->course_id}}">
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -13,7 +13,8 @@
                 <div class="form-group">
                     <label for="code">Código de Curso<small>*</small></label>
                     <input type="text" class="form-control" name="code" id="code"
-                        value="{{ $subject->code ?? '' }}" required>
+                        value="{{ $subject->code ?? '' }}" required onkeyup="checkCode()">
+                    <label class="badge badge-danger" id="code-error" hidden>Código de disciplina já existe!</label>
                 </div>
             </div>
             <div class="col-md-2">
@@ -28,6 +29,6 @@
 </div>
 <div class="row">
     <div class="col-md-2">
-        <button type="submit" class="btn btn-dark">Salvar</button>
+        <button type="submit" id="submit" class="btn btn-dark">Salvar</button>
     </div>
 </div>

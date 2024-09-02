@@ -55,10 +55,8 @@
                                             href="{{ route('subject.edit', $subject->id) }}">
                                             <i class="fa fa-lg fa-fw fa-pen"></i> Editar
                                         </a>
-                                        <a class="btn btn-xs btn-outline-info mx-1 shadow"
-                                            href="{{ route('subject.delete', $subject->id) }}">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i> Remover
-                                        </a>
+                                        <x-modal url="{{ route('subject.delete', $subject->id) }}" id="{{ $subject->id }}"
+                                            name="{{ $subject->name }}" />
                                     </td>
                                 </tr>
                             @endforeach

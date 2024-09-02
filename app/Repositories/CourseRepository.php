@@ -34,4 +34,9 @@ class CourseRepository
         $course = $this->entity->find($id);
         $course->update($request->all());
     }
+
+    public function deleteCourse($course)
+    {
+        $course->delete();
+    }
 }

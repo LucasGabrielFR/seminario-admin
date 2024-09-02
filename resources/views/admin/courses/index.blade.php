@@ -33,8 +33,10 @@
                                 href="{{ route('course.view', $course->id) }}">
                                 <i class="fa fa-lg fa-fw fa-eye"></i> Ver
                             </a>
-                            <x-modal url="{{ route('category.delete', $course->id) }}" id="{{ $course->id }}"
+                            @if($course->subjects->count() == 0)
+                            <x-modal url="{{ route('course.delete', $course->id) }}" id="{{ $course->id }}"
                                 name="{{ $course->name }}" />
+                            @endif
                         </td>
                     </tr>
                 @endforeach

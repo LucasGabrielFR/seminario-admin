@@ -67,4 +67,15 @@ class CourseController extends Controller
             'course' => $course
         ]);
     }
+
+    public function delete($id)
+    {
+        $course = $this->repository->getCourse($id);
+        if (!$course)
+            return redirect()->back();
+
+        $this->repository->deleteCourse($course);
+
+        return redirect()->route('courses');
+    }
 }
