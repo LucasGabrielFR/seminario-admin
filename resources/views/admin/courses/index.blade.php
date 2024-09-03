@@ -33,7 +33,7 @@
                                 href="{{ route('course.view', $course->id) }}">
                                 <i class="fa fa-lg fa-fw fa-eye"></i> Ver
                             </a>
-                            @if($course->subjects->count() == 0)
+                            @if($course->subjects->count() == 0 && $course->students->count() == 0)
                             <x-modal url="{{ route('course.delete', $course->id) }}" id="{{ $course->id }}"
                                 name="{{ $course->name }}" />
                             @endif
