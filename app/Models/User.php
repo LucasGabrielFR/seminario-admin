@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class, 'user_permissions', 'user_id', 'permission_id');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'user_courses', 'user_id', 'course_id');
+    }
 }

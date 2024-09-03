@@ -9,6 +9,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserCourseController;
+use App\Models\UserCourse;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
@@ -76,6 +78,11 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::put('admin/subjects/subject/{id}', [SubjectController::class, 'update'])->name('subject.update');
     Route::delete('admin/subjects/subject/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
     Route::get('admin/subjects/check-code/{code}', [SubjectController::class, 'checkCode'])->name('subject.check-code');
+
+    //Students routes
+    Route::post('admin/course/students', [UserCourseController::class, 'enroll'])->name('students.enroll');
+    Route::delete('admin/course/{courseId}/student/{studentId}', [UserCourseController::class, 'delete'])->name('student.delete');
+
 
 
     Route::middleware(['isAdmin'])->group(function () {

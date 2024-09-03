@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\CourseRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -58,13 +60,16 @@ class CourseController extends Controller
 
     public function view($id)
     {
+        $userRepository = new UserRepository(new User());
+        $users = $userRepository->getAllUsers();
 
         $course = $this->repository->getCourse($id);
         if (!$course)
             return redirect()->back();
 
         return view('admin.courses.view', [
-            'course' => $course
+            'course' => $course,
+            'users' => $users
         ]);
     }
 

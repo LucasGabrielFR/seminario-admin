@@ -2,30 +2,30 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\UuidTrait;
 
-class Course extends Model
+class UserCourse extends Model
 {
     use HasFactory, UuidTrait;
 
     public $incrementing = false;
-
     protected $keyType = 'uuid';
 
     protected $fillable = [
-        'name',
-        'code'
+        'user_id',
+        'course_id',
+        'status'
     ];
 
-    public function subjects()
+    public function user()
     {
-        return $this->hasMany(Subject::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function students()
+    public function course()
     {
-        return $this->belongsToMany(User::class, 'user_courses', 'course_id', 'user_id');
+        return $this->belongsTo(Course::class);
     }
 }
