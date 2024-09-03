@@ -21,7 +21,7 @@ class CategoryRepository
 
     public function createCategory(Request $request)
     {
-        $this->entity->create($request->all());
+        return $this->entity->create($request->all());
     }
 
     public function updateCategory(Request $request, $id)

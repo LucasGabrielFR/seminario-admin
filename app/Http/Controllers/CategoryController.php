@@ -64,4 +64,11 @@ class CategoryController extends Controller
 
         return redirect()->route('categories');
     }
+
+    public function storeAjax(Request $request)
+    {
+        $category = $this->repository->createCategory($request);
+
+        return response()->json($category);
+    }
 }

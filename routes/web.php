@@ -51,6 +51,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::put('admin/categories/category/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::post('admin/categories/category', [CategoryController::class, 'store'])->name('category.store');
     Route::delete('admin/categories/category/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::post('admin/categories/category', [CategoryController::class, 'storeAjax'])->name('category.store-ajax');
 
     //Loan routes
     Route::get('admin/loans', [LoanController::class, 'index'])->name('loans');

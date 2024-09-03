@@ -119,16 +119,35 @@
         <div class="row">
             <div class="col-md-12">
                 <label for="categories">Categorias</label>
-                <select class="form-select" id="multiple-select-optgroup-field"
-                    data-placeholder="Escolha as categorias" multiple name="categories[]">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" @if (isset($book->categories) && in_array($category->id, $book->categories->pluck('id')->toArray())) selected @endif>
-                            {{ $category->name }}</option>
-                    @endforeach
-                </select>
+                <div class="row">
+                    <div class="col-md-9">
+                        <select class="form-select" id="multiple-select-optgroup-field"
+                            data-placeholder="Escolha as categorias" multiple name="categories[]">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" @if (isset($book->categories) && in_array($category->id, $book->categories->pluck('id')->toArray())) selected @endif>
+                                    {{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-dark mb-3" onclick="$('#add-category').toggle()">
+                            <i class="fa fa-lg fa-fw fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <br>
+        <div class="row mb-3" style="display: none" id="add-category">
+            <label for="category">Nova categoria</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="category" id="category">
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-dark" onclick="addCategory()">
+                    <i class="fa fa-lg fa-fw fa-plus"></i>
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-2">
                 <button type="submit" class="btn btn-dark">Salvar</button>
@@ -138,7 +157,7 @@
 </div>
 @section('js')
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Versão completa do jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script>
@@ -170,7 +189,6 @@
                     var publisher = info.publisher;
                     var publish = info.publishedDate;
 
-
                     document.getElementById("author").value = author;
                     document.getElementById("name").value = title;
                     document.getElementById("page_num").value = pageNum;
@@ -181,6 +199,35 @@
                 .catch(error => {
                     console.error('Erro:', error);
                 });
+        }
+
+        function addCategory() {
+            const categoryName = document.getElementById('category').value;
+
+            if (categoryName === '') {
+                alert('Por favor, insira um nome para a categoria.');
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('category.store-ajax') }}', // URL para a rota de criação
+                type: 'POST',
+                data: {
+                    name: categoryName,
+                    _token: '{{ csrf_token() }}' // Adicione o token CSRF
+                },
+                success: function(response) {
+                    // Adiciona a nova categoria ao select
+                    const newOption = new Option(response.name, response.id, false, true);
+                    $('#multiple-select-optgroup-field').append(newOption).trigger('change');
+                    $('#category').val(''); // Limpa o campo de texto da categoria
+                    $('#add-category').hide(); // Esconde a área de adicionar categoria
+                },
+                error: function(xhr) {
+                    alert('Erro ao adicionar a categoria. Tente novamente.');
+                    console.error(xhr);
+                }
+            });
         }
     </script>
 @stop
