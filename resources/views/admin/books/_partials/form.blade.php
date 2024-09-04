@@ -143,7 +143,7 @@
                 <input type="text" class="form-control" name="category" id="category">
             </div>
             <div class="col-md-2">
-                <a class="btn btn-dark" onclick="addCategory()">
+                <a class="btn btn-dark" onclick="addCategory()" id="submit-category">
                     <i class="fa fa-lg fa-fw fa-plus"></i>
                 </a>
             </div>
@@ -202,13 +202,14 @@
         }
 
         function addCategory() {
+
             const categoryName = document.getElementById('category').value;
 
             if (categoryName === '') {
                 alert('Por favor, insira um nome para a categoria.');
                 return;
             }
-
+            $('#submit-category').toggle();
             $.ajax({
                 url: '{{ route('category.store-ajax') }}', // URL para a rota de criação
                 type: 'POST',
@@ -222,6 +223,7 @@
                     $('#multiple-select-optgroup-field').append(newOption).trigger('change');
                     $('#category').val(''); // Limpa o campo de texto da categoria
                     $('#add-category').hide(); // Esconde a área de adicionar categoria
+                    $('#submit-category').toggle();
                 },
                 error: function(xhr) {
                     alert('Erro ao adicionar a categoria. Tente novamente.');
