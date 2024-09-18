@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCourseController;
@@ -84,6 +85,14 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/course/students', [UserCourseController::class, 'enroll'])->name('students.enroll');
     Route::delete('admin/course/{courseId}/student/{studentId}', [UserCourseController::class, 'delete'])->name('student.delete');
 
+    //Roles routes
+    Route::get('admin/roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('admin/roles/create', [RoleController::class, 'create'])->name('role.create');
+    Route::get('admin/roles/role/{id}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('admin/roles/role/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::post('admin/roles/role', [RoleController::class, 'store'])->name('role.store');
+    // Route::delete('admin/roles/role/{id}', [RoleController::class, 'delete'])->name('role.delete');
+
 
 
     Route::middleware(['isAdmin'])->group(function () {
@@ -102,7 +111,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('admin/permissions/permission/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
         Route::put('admin/permissions/permission/{id}', [PermissionController::class, 'update'])->name('permission.update');
         Route::post('admin/permissions/permission', [PermissionController::class, 'store'])->name('permission.store');
-        Route::delete('admin/permissions/permission/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+        // Route::delete('admin/permissions/permission/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
     });
 });
 Route::get('/', function () {

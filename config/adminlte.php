@@ -368,10 +368,10 @@ return [
                     'shift' => 'ml-4',
                 ],
                 [
-                    'text' => 'Disciplinas',
-                    'url'  => 'admin/alunos',
+                    'text' => 'Cargos',
+                    'url'  => 'admin/roles',
                     'shift' => 'ml-4',
-                ],
+                ]
             ],
         ],
         // ['header' => 'labels'],
