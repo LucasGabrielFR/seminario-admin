@@ -59,5 +59,11 @@ class RoleController extends Controller
 
     function delete($id)
     {
+        $role = $this->repository->getRole($id);
+        if(!$role)
+            return redirect()->back();
+
+        $this->repository->deleteRole($id);
+        return redirect()->route('roles');
     }
 }

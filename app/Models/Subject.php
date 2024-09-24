@@ -18,11 +18,17 @@ class Subject extends Model
         'name',
         'code',
         'credits',
-        'course_id'
+        'course_id',
+        'link'
     ];
 
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'role_classrooms', 'subject_id', 'user_id');
     }
 }

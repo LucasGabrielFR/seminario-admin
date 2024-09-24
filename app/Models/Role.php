@@ -16,7 +16,13 @@ class Role extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'role_classroom', 'role_id', 'user_id')
+        return $this->belongsToMany(User::class, 'role_classrooms', 'role_id', 'user_id')
+            ->using(UserPermission::class);
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'role_classrooms', 'role_id', 'subject_id')
             ->using(UserPermission::class);
     }
 }

@@ -34,4 +34,10 @@ class RoleRepository
         $role = $this->entity->find($id);
         $role->update($request->all());
     }
+
+    function deleteRole($id)
+    {
+        $role = $this->entity->find($id);
+        $role->delete();
+    }
 }

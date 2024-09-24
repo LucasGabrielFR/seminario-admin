@@ -66,4 +66,13 @@ class SubjectController extends Controller
 
         return redirect()->route('course.view', ['id' => $subject->course_id]);
     }
+
+    public function view($id)
+    {
+        $subject = $this->repository->getSubject($id);
+
+        return view('admin.subjects.view', [
+            'subject' => $subject
+        ]);
+    }
 }

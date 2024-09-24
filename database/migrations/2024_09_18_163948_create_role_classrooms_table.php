@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
+        Schema::create('role_classrooms', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('code');
-            $table->integer('credits');
-            $table->string('course_id')->nullable(false);
-            $table->string('link')->nullable(true);
+            $table->uuid('user_id')->nullable(false);
+            $table->uuid('role_id')->nullable(false);
+            $table->uuid('subject_id')->nullable(false);
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('role_classrooms');
     }
 };

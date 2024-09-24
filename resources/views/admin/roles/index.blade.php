@@ -29,8 +29,10 @@
                                 href="{{ route('role.edit', $role->id) }}">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </a>
-                            {{-- <x-modal url="{{ route('role.delete', $role->id) }}" id="{{ $role->id }}"
-                                name="{{ $role->name }}" /> --}}
+                            @if($role->users->count() == 0)
+                            <x-modal url="{{ route('role.delete', $role->id) }}" id="{{ $role->id }}"
+                                name="{{ $role->name }}" />
+                            @endif
                         </td>
                     </tr>
                 @endforeach
