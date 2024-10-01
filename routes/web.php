@@ -10,13 +10,10 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleClassroomController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCourseController;
-use App\Models\RoleClassroom;
-use App\Models\UserCourse;
 use Illuminate\Support\Facades\Route;
-
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +95,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/roles/role', [RoleController::class, 'store'])->name('role.store');
     Route::delete('admin/roles/role/{id}', [RoleController::class, 'delete'])->name('role.delete');
 
-
+    //Tools routes
+    Route::get('admin/scales', [ToolsController::class, 'scales'])->name('scales');
 
     Route::middleware(['isAdmin'])->group(function () {
         //Users routes

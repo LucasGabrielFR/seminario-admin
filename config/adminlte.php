@@ -374,6 +374,18 @@ return [
                 ]
             ],
         ],
+        [
+            'text'    => 'Ferramentas',
+            'icon'    => 'fas fa-fw fa-wrench',
+            'can' => 'admin',
+            'submenu' => [
+                [
+                    'text' => 'Escalas',
+                    'url'  => 'admin/scales',
+                    'shift' => 'ml-4',
+                ],
+            ],
+        ],
         // ['header' => 'labels'],
         // [
         //     'text'       => 'important',
