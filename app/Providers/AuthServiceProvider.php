@@ -31,14 +31,11 @@ class AuthServiceProvider extends ServiceProvider
         // });
 
         Gate::define('admin', function (User $user) {
-            $isAdmin = false;
-            foreach ($user->permissions as $permission) {
-                if ((int)$permission->id === 1) {
-                    $isAdmin = true;
-                    break;
-                }
-            }
-            return $isAdmin;
+            return $user->permissions->contains('id', 1); // Verifica se o usuário tem a permissão com ID 1
+        });
+
+        Gate::define('librarian', function (User $user) {
+            return $user->permissions->contains('id', 4); // Verifica se o usuário tem a permissão com ID 4
         });
     }
 }

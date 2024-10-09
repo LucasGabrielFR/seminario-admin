@@ -80,15 +80,16 @@
             </div>
         </div>
         <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="password">Senha</label>
-                    <input type="password" class="form-control" name="password" id="password">
+        @if ($loggedUser->permissions->contains('id', 1))
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr>
+            <hr>
         <div class="row">
             <div class="col-md-12">
                 <label for="permissions">Permissões</label>
@@ -102,6 +103,7 @@
             </div>
         </div>
         <hr>
+        @endif
         <div class="row">
             <div class="col-md-2">
                 <button type="submit" class="btn btn-dark">Salvar</button>

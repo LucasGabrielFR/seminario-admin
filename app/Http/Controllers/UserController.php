@@ -22,19 +22,23 @@ class UserController extends Controller
 
     public function index()
     {
+        $loggedUser = Auth::user();
         $users = $this->repository->getAllUsers();
         return view('admin.users.index', [
-            'users' => $users
+            'users' => $users,
+            'loggedUser' => $loggedUser
         ]);
     }
 
     public function create()
     {
+        $loggedUser = Auth::user();
         $permissionRepo = new PermissionRepository(new Permission());
         $permissions = $permissionRepo->getAllPermissions();
 
         return view('admin.users.create', [
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'loggedUser' => $loggedUser
         ]);
     }
 
@@ -60,6 +64,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $loggedUser = Auth::user();
         $user = $this->repository->getUserById($id);
         $permissionRepo = new PermissionRepository(new Permission());
         $permissions = $permissionRepo->getAllPermissions();
@@ -69,27 +74,39 @@ class UserController extends Controller
 
         return view('admin.users.edit', [
             'user' => $user,
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'loggedUser' => $loggedUser
         ]);
     }
 
     public function update(Request $request, $id)
     {
-
+        $loggedUser = Auth::user();
         $user = $this->repository->getUserById($id);
 
         $user = $request->all();
 
-        $user['password'] = Hash::make($user['password']);
-
-        $permissions = $user['permissions'];
-        unset($user['permissions']);
+        if (isset($user['password'])) {
+            $user['password'] = Hash::make($user['password']);
+        } else {
+            unset($user['password']);
+            unset($request['password']);
+        }
 
         $userPermission = new UserPermissionRepository(new UserPermission());
-        $userPermission->deleteByUser($id);
 
-        foreach ($permissions as $permission) {
-            $userPermission->create($id, $permission);
+        if (isset($user['permissions'])) {
+            $permissions = $user['permissions'];
+            unset($user['permissions']);
+
+
+            $userPermission->deleteByUser($id);
+
+            foreach ($permissions as $permission) {
+                $userPermission->create($id, $permission);
+            }
+        } else if($loggedUser->permissions->contains('id', 1)) {
+            $userPermission->deleteByUser($id);
         }
 
         if (!$user)
@@ -112,5 +129,4 @@ class UserController extends Controller
 
         return redirect()->route('users');
     }
-
 }

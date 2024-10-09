@@ -100,7 +100,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
 
 
-    Route::middleware(['isAdmin'])->group(function () {
+    Route::middleware(['isAdminOrLibrarian'])->group(function () {
         //Users routes
         Route::get('admin/users', [UserController::class, 'index'])->name('users');
         Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
@@ -108,8 +108,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
         Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
         Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
+    });
 
-
+    Route::middleware(['isAdmin'])->group(function () {
         //Permission Routes
         Route::get('admin/permissions', [PermissionController::class, 'index'])->name('permissions');
         Route::get('admin/permissions/create', [PermissionController::class, 'create'])->name('permission.create');
