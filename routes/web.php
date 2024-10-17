@@ -35,6 +35,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
+Route::post('/telegram/send-message', [TelegramBotController::class, 'sendCustomMessage']);
+Route::get('/telegram/set-webhook', [TelegramBotController::class, 'setWebhook']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');
@@ -126,3 +128,4 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 Route::get('/', function () {
     return redirect('/login');
 });
+

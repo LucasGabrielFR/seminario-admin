@@ -28,4 +28,29 @@ class TelegramBotController extends Controller
             'text' => "Você disse: " . $text,
         ]);
     }
+
+    public function sendMessage($chatId, $message)
+    {
+        $this->telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => $message,
+        ]);
+    }
+
+    public function sendCustomMessage(Request $request)
+    {
+        $chatId = $request->input('chat_id'); // Obtenha o chat_id do request
+        $message = $request->input('message'); // Obtenha a mensagem do request
+
+        $this->sendMessage($chatId, $message);
+    }
+
+    public function setWebhook()
+    {
+        $webhookUrl = env('APP_URL') . '/telegram/webhook'; // Defina a URL do seu webhook
+
+        $response = $this->telegram->setWebhook(['url' => $webhookUrl]);
+
+        return response()->json($response);
+    }
 }
