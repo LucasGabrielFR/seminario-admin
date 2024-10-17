@@ -10,6 +10,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleClassroomController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TelegramBotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCourseController;
 use App\Models\RoleClassroom;
@@ -32,6 +33,8 @@ use Illuminate\Http\Request;
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');
