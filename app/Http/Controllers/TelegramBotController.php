@@ -39,8 +39,8 @@ class TelegramBotController extends Controller
 
     public function sendCustomMessage()
     {
-        $chatId = '6803564176'; // Obtenha o chat_id do request
-        $message = 'Olá Lucas'; // Obtenha a mensagem do request
+        $chatId = '1164744805'; // Obtenha o chat_id do request
+        $message = 'Olá Gay Viadão'; // Obtenha a mensagem do request
 
         $this->sendMessage($chatId, $message);
     }
