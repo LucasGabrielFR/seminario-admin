@@ -39,18 +39,9 @@ class TelegramBotController extends Controller
 
     public function sendCustomMessage(Request $request)
     {
-        $chatId = $request->input('chat_id'); // Obtenha o chat_id do request
-        $message = $request->input('message'); // Obtenha a mensagem do request
+        $chatId = $request->input('6803564176'); // Obtenha o chat_id do request
+        $message = $request->input('Olá Lucas'); // Obtenha a mensagem do request
 
         $this->sendMessage($chatId, $message);
-    }
-
-    public function setWebhook()
-    {
-        $webhookUrl = env('APP_URL') . '/telegram/webhook'; // Defina a URL do seu webhook
-
-        $response = $this->telegram->deleteWebhook(['url' => $webhookUrl]);
-
-        return response()->json($response);
     }
 }
