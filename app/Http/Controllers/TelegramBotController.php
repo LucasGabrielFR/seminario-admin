@@ -49,7 +49,7 @@ class TelegramBotController extends Controller
     {
         $webhookUrl = env('APP_URL') . '/telegram/webhook'; // Defina a URL do seu webhook
 
-        $response = $this->telegram->setWebhook(['url' => $webhookUrl]);
+        $response = $this->telegram->deleteWebhook(['url' => $webhookUrl]);
 
         return response()->json($response);
     }
