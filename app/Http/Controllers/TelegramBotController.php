@@ -26,7 +26,6 @@ class TelegramBotController extends Controller
             default:
                 $chatId = $update->getMessage()->getChat()->getId();
 
-
                 // Responder com uma mensagem
                 $this->telegram->sendMessage([
                     'chat_id' => $chatId,
