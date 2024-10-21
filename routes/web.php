@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleClassroomController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\TelegramBotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCourseController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
+Route::post('/telegram/send-message', [TelegramBotController::class, 'sendCustomMessage']);
+Route::get('/telegram/set-webhook', [TelegramBotController::class, 'setWebhook']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');
@@ -98,7 +103,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     //Tools routes
     Route::get('admin/scales', [ToolsController::class, 'scales'])->name('scales');
 
-    Route::middleware(['isAdmin'])->group(function () {
+    Route::middleware(['isAdminOrLibrarian'])->group(function () {
         //Users routes
         Route::get('admin/users', [UserController::class, 'index'])->name('users');
         Route::get('admin/users/create', [UserController::class, 'create'])->name('user.create');
@@ -106,8 +111,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::put('admin/users/user/{id}', [UserController::class, 'update'])->name('user.update');
         Route::post('admin/users/user', [UserController::class, 'store'])->name('user.store');
         Route::delete('admin/users/user/{id}', [UserController::class, 'delete'])->name('user.delete');
+    });
 
-
+    Route::middleware(['isAdmin'])->group(function () {
         //Permission Routes
         Route::get('admin/permissions', [PermissionController::class, 'index'])->name('permissions');
         Route::get('admin/permissions/create', [PermissionController::class, 'create'])->name('permission.create');
@@ -120,3 +126,4 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 Route::get('/', function () {
     return redirect('/login');
 });
+

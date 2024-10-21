@@ -21,7 +21,8 @@
                         required>
                         <option value="">Selecione</option>
                         @foreach ($books as $book)
-                            <option value="{{ $book->id }}">{{ $book->name }}</option>
+                            <option value="{{ $book->id }}" data-pages="{{ $book->page_num }}">{{ $book->name }}
+                            </option>
                         @endforeach
                     </select>
 
@@ -46,13 +47,24 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#book_id').select2({
-                theme: 'classic',
-            });
-            $('#user_id').select2({
-                theme: 'classic',
-            });
 
+            $('#book_id').change(function() {
+                var selectedOption = $(this).find('option:selected');
+                var pages = parseInt(selectedOption.data('pages')); // Obtém o número de páginas do livro
+                var currentDate = new Date();
+                var returnDate;
+
+                // Calcula a data de devolução
+                if (pages < 100) {
+                    currentDate.setDate(currentDate.getDate() + 7); // 7 dias para devolução
+                } else {
+                    currentDate.setDate(currentDate.getDate() + 15); // 15 dias para devolução
+                }
+
+                // Formata a data para o formato YYYY-MM-DD
+                returnDate = currentDate.toISOString().split('T')[0];
+                $('#date_limit').val(returnDate); // Define a data de devolução no campo
+            });
         });
     </script>
 @stop

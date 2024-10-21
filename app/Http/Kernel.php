@@ -70,4 +70,5 @@ class Kernel extends HttpKernel
         'isTeacher' => \App\Http\Middleware\UserPermissions\UserTeacher::class,
         'isPriest' => \App\Http\Middleware\UserPermissions\UserPriest::class,
         'isSecretary' => \App\Http\Middleware\UserPermissions\UserSecretary::class,
+        'isAdminOrLibrarian' => \App\Http\Middleware\UserPermissions\UserAdminOrLibrarian::class,
     ];}

@@ -9,7 +9,7 @@
 
 @section('content')
     @php
-        $heads = ['Nome', 'Turma', 'Cidade','Dt. Nascimento', 'Ações'];
+        $heads = ['Nome', 'Turma', 'Cidade', 'Dt. Nascimento', 'Ações'];
 
         $config = [
             'data' => $users,
@@ -31,8 +31,10 @@
                                 href="{{ route('user.edit', $user->id) }}">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </a>
-                            <x-modal url="{{ route('user.delete', $user->id) }}" id="{{ $user->id }}"
-                                name="{{ $user->name }}" />
+                            @if ($loggedUser->permissions->contains('id', 1))
+                                <x-modal url="{{ route('user.delete', $user->id) }}" id="{{ $user->id }}"
+                                    name="{{ $user->name }}" />
+                            @endif
                         </td>
                     </tr>
                 @endforeach

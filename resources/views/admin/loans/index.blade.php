@@ -36,7 +36,11 @@
                         <td>{{ $loan->book->author }}</td>
                         <td>{{ $loan->book->publisher }}</td>
                         <td>{{ $loan->user->name }}</td>
-                        <td>{{ date('d/m/Y H:i:s', strtotime($loan->date_loan)) }}</td>
+                        <td>
+                            @if (isset($loan->date_loan))
+                                {{ date('d/m/Y H:i:s', strtotime($loan->date_loan)) }}
+                            @endif
+                        </td>
                         <td class="date-limit">
                             @if ($loan->status == 1)
                                 {{ date('d/m/Y', strtotime($loan->date_limit)) }}
