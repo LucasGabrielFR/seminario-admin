@@ -17,30 +17,21 @@ class TelegramBotController extends Controller
     public function webhook(Request $request)
     {
         $update = $this->telegram->getWebhookUpdate();
+        $text = $update->getMessage()->getText();
 
-        if ($update->isType('command')) {
-            $command = $update->getCommand();
+        switch ($text) {
+            case '/ajuda':
+                $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado');
+                break;
+            default:
+                $chatId = $update->getMessage()->getChat()->getId();
 
-            switch ($command) {
-                case '/ajuda':
-                    $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado');
-                    break;
-                default:
-                    $this->sendMessage($update->getMessage()->getChat()->getId(), 'Nenhuma opção encontrada.');
-                    break;
-            }
-        }
 
-        if ($update->isType('message')) {
-            // Processar a mensagem recebida
-            $chatId = $update->getMessage()->getChat()->getId();
-            $text = $update->getMessage()->getText();
-
-            // Responder com uma mensagem
-            $this->telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => "Você disse: " . $text,
-            ]);
+                // Responder com uma mensagem
+                $this->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => "Você disse: " . $text,
+                ]);
         }
     }
 
