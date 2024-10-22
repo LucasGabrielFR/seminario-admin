@@ -9,8 +9,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleClassroomController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ScaleController;
+use App\Http\Controllers\ScaleFunctionController;
 use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\TelegramBotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCourseController;
@@ -100,8 +101,17 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('admin/roles/role', [RoleController::class, 'store'])->name('role.store');
     Route::delete('admin/roles/role/{id}', [RoleController::class, 'delete'])->name('role.delete');
 
-    //Tools routes
-    Route::get('admin/scales', [ToolsController::class, 'scales'])->name('scales');
+    //Scales routes
+    Route::get('admin/scales/create', [ScaleController::class, 'create'])->name('scale.create');
+    Route::get('admin/scales', [ScaleController::class, 'index'])->name('scales');
+
+    //Scale Functions routes
+    Route::get('admin/scale-functions', [ScaleFunctionController::class, 'index'])->name('scale-functions');
+    Route::get('admin/scale-functions/create', [ScaleFunctionController::class, 'create'])->name('scale-function.create');
+    Route::post('admin/scale-functions/scale-function', [ScaleFunctionController::class, 'store'])->name('scale-function.store');
+    Route::get('admin/scale-functions/scale-function/edit/{id}', [ScaleFunctionController::class, 'edit'])->name('scale-function.edit');
+    Route::put('admin/scale-functions/scale-function/{id}', [ScaleFunctionController::class, 'update'])->name('scale-function.update');
+    Route::delete('admin/scale-functions/scale-function/{id}', [ScaleFunctionController::class, 'delete'])->name('scale-function.delete');
 
     Route::middleware(['isAdminOrLibrarian'])->group(function () {
         //Users routes

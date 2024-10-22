@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 
 class ToolsController extends Controller
 {
-    public function scales()
+    function index() {
+        return view('admin.scales.index');
+    }
+    public function create()
     {
-        return view('admin.tools.scales.index');
+        return view('admin.scales.create');
     }
 }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->tinyInteger('status');
             $table->string('photo')->nullable();
             $table->string('class');
+            $table->string('chat_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

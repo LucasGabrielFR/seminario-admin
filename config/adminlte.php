@@ -375,15 +375,22 @@ return [
             ],
         ],
         [
-            'text'    => 'Ferramentas',
-            'icon'    => 'fas fa-fw fa-wrench',
+            'text'    => 'Escalas',
+            'icon'    => 'fas fa-fw fa-border-all',
             'can' => 'admin',
             'submenu' => [
                 [
-                    'text' => 'Escalas',
+                    'text' => 'Listar Escalas',
                     'url'  => 'admin/scales',
                     'shift' => 'ml-4',
+                    'icon' => 'fas fa-fw fa-list',
                 ],
+                [
+                    'text' => 'Listar Funções',
+                    'url'  => 'admin/scale-functions',
+                    'shift' => 'ml-4',
+                    'icon' => 'fas fa-fw fa-list',
+                ]
             ],
         ],
         // ['header' => 'labels'],
