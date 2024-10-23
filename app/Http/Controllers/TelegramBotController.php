@@ -32,7 +32,7 @@ class TelegramBotController extends Controller
 
                 // Responder com uma mensagem formatada
                 $message = "Olá *$userName*, eu sou o bot do Seminário São José. Irei repassar as informações necessárias para o Lucas, Obrigado!!.\n\n";
-                $message .= '"' . $randomPhrase->phrase . '" \n\n' . $randomPhrase->author; // Usando Markdown para destacar o ChatID
+                $message .= '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author; // Usando Markdown para destacar o ChatID
 
                 $this->telegram->sendMessage([
                     'chat_id' => $chatId,
