@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Phrase;
 use Illuminate\Http\Request;
 use Telegram\Bot\Api;
 
@@ -19,6 +20,8 @@ class TelegramBotController extends Controller
         $update = $this->telegram->getWebhookUpdate();
         $text = $update->getMessage()->getText();
 
+        $randomPhrase = Phrase::inRandomOrder()->first();
+
         switch ($text) {
             case '/ajuda':
                 $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado');
@@ -28,12 +31,20 @@ class TelegramBotController extends Controller
                 $userName = $update->getMessage()->getFrom()->getFirstName();
 
                 // Responder com uma mensagem formatada
-                $message = "Olá *$userName*, eu sou o bot do Seminário São José. Irei lhe enviar o seu ChatID, por favor repasse ao Lucas para que ele possa atualizar o seu cadastro.\n\n";
-                $message .= "ChatID: `{$chatId}`"; // Usando Markdown para destacar o ChatID
+                $message = "Olá *$userName*, eu sou o bot do Seminário São José. Irei repassar as informações necessárias para o Lucas, Obrigado!!.\n\n";
+                $message .= '"' . $randomPhrase->phrase . '" \n\n' . $randomPhrase->author; // Usando Markdown para destacar o ChatID
 
                 $this->telegram->sendMessage([
                     'chat_id' => $chatId,
                     'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+
+                $adminMessage = "Ola *$userName*, eu sou o bot do Seminário São José. Seguem as informações do usuário *$userName*:\n\n";
+                $adminMessage .= "ChatID: `{$chatId}`"; // Usando Markdown para destacar o ChatID
+                $this->telegram->sendMessage([
+                    'chat_id' => '6803564176',
+                    'text' => $adminMessage,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
         }
