@@ -114,7 +114,7 @@ class TelegramBotController extends Controller
         $scaleRepository = new ScaleRepository(new Scale());
 
         $scale = $scaleRepository->getScale($scaleId);
-        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek+1);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek + 1);
 
         foreach ($scaleResponsibles as $scaleResponsible) {
             if (isset($scaleResponsible->user->chat_id)) {
@@ -159,8 +159,15 @@ class TelegramBotController extends Controller
         $scaleRepository = new ScaleRepository(new Scale());
         $scales = $scaleRepository->getAllScales();
         foreach ($scales as $scale) {
-            $scale->current_week = $scale->current_week + 1;
-            $scale->save();
+            $weeks = $scale->weeks;
+            $currentWeek = $scale->current_week;
+            if ($currentWeek == $weeks) {
+                $scale->current_week = 1;
+                $scale->save();
+            } else {
+                $scale->current_week = $scale->current_week + 1;
+                $scale->save();
+            }
         }
     }
 }
