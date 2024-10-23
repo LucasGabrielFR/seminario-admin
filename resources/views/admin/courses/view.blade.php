@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('plugins.Select2', true)
+{{-- @section('plugins.Select2', true) --}}
 
 @section('title', 'Ver curso')
 
