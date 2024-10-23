@@ -79,7 +79,7 @@ class TelegramBotController extends Controller
         return response()->json($response);
     }
 
-    public function sendScaleResponse($scaleId)
+    public function sendScaleResponseMorning($scaleId)
     {
         // Obtém o dia da semana (0 = domingo,1 = segunda, ...,6 = sábado)
         $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
@@ -96,6 +96,32 @@ class TelegramBotController extends Controller
                 $function = $scaleResponsible->function->name;
                 $message = "Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n !!!!*$function*!!!! \n\n Tenha um bom dia(Se puder)!";
 
+                $this->telegram->sendMessage([
+                    'chat_id' => $scaleResponsible->user->chat_id,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+            }
+        };
+    }
+
+    public function sendScaleResponseNight($scaleId)
+    {
+        // Obtém o dia da semana (0 = domingo,1 = segunda, ...,6 = sábado)
+        $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
+
+        $scaleReponseRepository = new ScaleResponsibleRepository(new ScaleResponsible());
+        $scaleRepository = new ScaleRepository(new Scale());
+
+        $scale = $scaleRepository->getScale($scaleId);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek+1);
+
+        foreach ($scaleResponsibles as $scaleResponsible) {
+            if (isset($scaleResponsible->user->chat_id)) {
+                $name = $scaleResponsible->user->name;
+                $function = $scaleResponsible->function->name;
+                $message = "Boa noite caro *$name*, no dia de amanhã você será responsável pela função de: \n\n !!!!*$function*!!!! \n\n Boa noite! Espero que seus sonhos sejam tão bons quanto sua vida de oração!";
+                dd($message);
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
                     'text' => $message,
