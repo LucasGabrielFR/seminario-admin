@@ -94,7 +94,7 @@ class TelegramBotController extends Controller
             if (isset($scaleResponsible->user->chat_id)) {
                 $name = $scaleResponsible->user->name;
                 $function = $scaleResponsible->function->name;
-                $message = "Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n *$function*. \n\n Tenha um bom dia(Se puder)!";
+                $message = "Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n !!!!*$function*!!!! \n\n Tenha um bom dia(Se puder)!";
 
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
@@ -117,9 +117,7 @@ class TelegramBotController extends Controller
 
         foreach ($scaleResponsibles as $scaleResponsible) {
             if ($scaleResponsible->function->id == '9c78b7c3-bfe0-4dd8-8cd0-13fa3773c1d1' && isset($scaleResponsible->user->chat_id)) {
-                $name = $scaleResponsible->user->name;
-                $function = $scaleResponsible->function->name;
-                $message = "Corre pra ligar a estufa se não vai todo mundo comer boia fria. \n\n Anda Logo, meu filho.";
+                $message = "Corre pra ligar a estufa se não vai todo mundo comer boia fria. \n\n Anda Logo meu filho!!!!";
 
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
