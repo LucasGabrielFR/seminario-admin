@@ -6,6 +6,8 @@
 
 @section('content_header')
     <h1>Ver Curso</h1>
+
+    <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet">
 @stop
 
 @section('content')
