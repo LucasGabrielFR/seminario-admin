@@ -163,64 +163,85 @@
                 userNames[$(this).val()] = $(this).data('name');
             });
 
+            const daysOfWeek = [{
+                    index: '0',
+                    day: 'domingo'
+                },
+                {
+                    index: '1',
+                    day: 'segunda-feira'
+                },
+                {
+                    index: '2',
+                    day: 'terça-feira'
+                },
+                {
+                    index: '3',
+                    day: 'quarta-feira'
+                },
+                {
+                    index: '4',
+                    day: 'quinta-feira'
+                },
+                {
+                    index: '5',
+                    day: 'sexta-feira'
+                },
+                {
+                    index: '6',
+                    day: 'sábado'
+                }
+            ];
+
             for (let i = 1; i <= weekCount; i++) {
                 const newWeek = document.createElement('div');
                 newWeek.className = 'week mb-4';
                 newWeek.id = `week-${i}`;
-                newWeek.innerHTML =
-                    `
+                newWeek.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2>Semana ${i}</h2>
+                    <h2>Semana ${i}</h2>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        ${[{index: '0', day:'domingo'}, {index: '1', day:'segunda-feira'}, {index: '2', day:'terça-feira'}, {index: '3', day:'quarta-feira'}, {index: '4', day:'quinta-feira'}, {index: '5', day:'sexta-feira'}, {index: '6', day:'sábado'}].map(day => ` <
-                    div class = "col-md-4 mb-3" >
-                    <
-                    h4 class = "text-center" > $ {
-                        day.day.charAt(0).toUpperCase() + day.day.slice(1)
-                    } < /h4> <
-                    table class = "table" >
-                    <
-                    thead >
-                    <
-                    tr >
-                    <
-                    th > Função < /th> <
-                    th > Responsável < /th> <
-                    /tr> <
-                    /thead> <
-                    tbody >
-                    $ {
-                        functions.map(func => `
-                                                            <tr>
-                                                                <td>
-                                                                    <label for="responsible-day-${day.index}-week-${i}-${func.id}" class="form-label">${func.name}</label>
-                                                                </td>
-                                                                <td>
-                                                                    <select id="responsible-day-${day.index}-week-${i}-${func.id}" class="form-control mb-2">
-                                                                        <option value="">Selecione um responsável</option>
-                                                                        ${selectedUsers.map(userId => `
-                                                                                                <option value="${userId}">${userNames[userId]}</option>
-                                                                                            `).join('')}
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
-                                                        `).join('')
-                    } <
-                    /tbody> <
-                    /table> <
-                    /div>
-                `).join('')}
-                                    </div>
-                                </div>
+                    <div class="col-md-12">
+                    <div class="card">
+                    <div class="card-body">
+                    <div class="row">
+                    ${daysOfWeek.map(day => `
+                            <div class="col-md-4 mb-3">
+                            <h4 class="text-center">${day.day.charAt(0).toUpperCase() + day.day.slice(1)}</h4>
+                            <table class="table">
+                            <thead>
+                            <tr>
+                            <th>Função</th>
+                            <th>Responsável</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            ${functions.map(func => `
+                    <tr>
+                    <td>
+                    <label for="responsible-day-${day.index}-week-${i}-${func.id}" class="form-label">${func.name}</label>
+                    </td>
+                    <td>
+                    <select id="responsible-day-${day.index}-week-${i}-${func.id}" class="form-control mb-2">
+                    <option value="">Selecione um responsável</option>
+                    ${selectedUsers.map(userId => `
+                            <option value="${userId}">${userNames[userId]}</option>
+                            `).join('')}
+                    </select>
+                    </td>
+                    </tr>
+                    `).join('')}
+                            </tbody>
+                            </table>
                             </div>
-                        </div>
+                            `).join('')}
                     </div>
-                `;
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    `;
                 weeksContainer.appendChild(newWeek);
             }
 
