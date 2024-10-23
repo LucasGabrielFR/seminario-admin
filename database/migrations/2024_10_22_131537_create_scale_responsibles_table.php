@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scales', function (Blueprint $table) {
+        Schema::create('scale_responsibles', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->integer('weeks');
-            $table->integer('current_week');
-            $table->tinyInteger('status');
+            $table->uuid('user_id');
+            $table->uuid('scale_id')->nullable(false);
+            $table->uuid('function_id')->nullable(false);
+            $table->integer('week');
+            $table->integer('day');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('scales');
+        Schema::dropIfExists('scale_responsibles');
     }
 };

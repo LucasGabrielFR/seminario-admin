@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="name" id="name"
+                                <input type="text" class="form-control" name="scale-name" id="scale-name"
                                     placeholder="Insira o nome" required>
                             </div>
 
@@ -81,6 +81,9 @@
             <div id="weeks-container" class="mt-4">
                 <!-- As semanas serão adicionadas aqui -->
             </div>
+            <button id="save-scale" class="btn btn-primary mt-3" onclick="saveScale()" style="display: none">
+                Salvar Escala
+            </button>
         </div>
     </body>
 @stop
@@ -164,7 +167,8 @@
                 const newWeek = document.createElement('div');
                 newWeek.className = 'week mb-4';
                 newWeek.id = `week-${i}`;
-                newWeek.innerHTML = `
+                newWeek.innerHTML =
+                    `
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2>Semana ${i}</h2>
                     </div>
@@ -173,36 +177,44 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        ${['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'].map(day => `
-                                                <div class="col-md-4 mb-3">
-                                                    <h4 class="text-center">${day.charAt(0).toUpperCase() + day.slice(1)}</h4>
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Função</th>
-                                                                <th>Responsável</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            ${functions.map(func => `
+                                        ${[{index: '0', day:'domingo'}, {index: '1', day:'segunda-feira'}, {index: '2', day:'terça-feira'}, {index: '3', day:'quarta-feira'}, {index: '4', day:'quinta-feira'}, {index: '5', day:'sexta-feira'}, {index: '6', day:'sábado'}].map(day => ` <
+                    div class = "col-md-4 mb-3" >
+                    <
+                    h4 class = "text-center" > $ {
+                        day.day.charAt(0).toUpperCase() + day.day.slice(1)
+                    } < /h4> <
+                    table class = "table" >
+                    <
+                    thead >
+                    <
+                    tr >
+                    <
+                    th > Função < /th> <
+                    th > Responsável < /th> <
+                    /tr> <
+                    /thead> <
+                    tbody >
+                    $ {
+                        functions.map(func => `
                                                             <tr>
                                                                 <td>
-                                                                    <label for="responsible-${i}-${func.id}" class="form-label">${func.name}</label>
+                                                                    <label for="responsible-day-${day.index}-week-${i}-${func.id}" class="form-label">${func.name}</label>
                                                                 </td>
                                                                 <td>
-                                                                    <select id="responsible-${i}-${func.id}" class="form-control mb-2">
+                                                                    <select id="responsible-day-${day.index}-week-${i}-${func.id}" class="form-control mb-2">
                                                                         <option value="">Selecione um responsável</option>
                                                                         ${selectedUsers.map(userId => `
-                                                                                <option value="${userId}">${userNames[userId]}</option>
-                                                                            `).join('')}
+                                                                                                <option value="${userId}">${userNames[userId]}</option>
+                                                                                            `).join('')}
                                                                     </select>
                                                                 </td>
                                                             </tr>
-                                                        `).join('')}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            `).join('')}
+                                                        `).join('')
+                    } <
+                    /tbody> <
+                    /table> <
+                    /div>
+                `).join('')}
                                     </div>
                                 </div>
                             </div>
@@ -211,6 +223,73 @@
                 `;
                 weeksContainer.appendChild(newWeek);
             }
+
+            $('#save-scale').show();
+        }
+
+        function saveScale() {
+            const scaleName = $('#scale-name').val();
+            const weekCount = parseInt(document.getElementById('weeks').value);
+            const scaleWeeks = [];
+
+            for (let i = 1; i <= weekCount; i++) {
+                const week = {
+                    week: i,
+                    days: []
+                };
+                //Loop de do array de objeto dias de domingo a sábado
+                const days = [{
+                        day: 'domingo'
+                    },
+                    {
+                        day: 'segunda-feira'
+                    },
+                    {
+                        day: 'terça-feira'
+                    },
+                    {
+                        day: 'quarta-feira'
+                    },
+                    {
+                        day: 'quinta-feira'
+                    },
+                    {
+                        day: 'sexta-feira'
+                    },
+                    {
+                        day: 'sábado'
+                    }
+                ];
+
+                days.forEach((day, index) => {
+                    functions.forEach((func, j) => {
+                        day[func.id] = {
+                            function_id: func.id,
+                            responsible_id: $('#responsible-day-' + index + '-week-' + i + '-' + func
+                                .id).val(),
+                            day: index
+                        };
+                    })
+                })
+
+                week.days.push(days);
+
+                scaleWeeks.push(week);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/scales/store',
+                data: {
+                    name: scaleName,
+                    weeks: scaleWeeks,
+                    week_count: weekCount,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function() {
+                    window.location.href = '/admin/scales';
+                }
+            })
         }
     </script>
 @stop

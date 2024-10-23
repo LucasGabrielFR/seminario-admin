@@ -103,7 +103,11 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
     //Scales routes
     Route::get('admin/scales/create', [ScaleController::class, 'create'])->name('scale.create');
+    Route::post('admin/scales/store', [ScaleController::class, 'store'])->name('scale.store');
     Route::get('admin/scales', [ScaleController::class, 'index'])->name('scales');
+    // Route::get('admin/scales/edit/{id}', [ScaleController::class, 'edit'])->name('scale.edit');
+    // Route::put('admin/scales/update/{id}', [ScaleController::class, 'update'])->name('scale.update');
+    Route::delete('admin/scales/delete/{id}', [ScaleController::class, 'delete'])->name('scale.delete');
 
     //Scale Functions routes
     Route::get('admin/scale-functions', [ScaleFunctionController::class, 'index'])->name('scale-functions');

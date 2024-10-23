@@ -15,4 +15,10 @@ class ScaleFunction extends Model
     protected $keyType = 'uuid';
 
     protected $fillable = ['name'];
+
+    public function scales()
+    {
+        return $this->belongsToMany(Scale::class, 'scale_responsibles', 'function_id', 'scale_id')
+            ->using(ScaleResponsible::class);
+    }
 }

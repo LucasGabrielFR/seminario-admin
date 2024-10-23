@@ -9,7 +9,7 @@
 
 @section('content')
     @php
-        $heads = ['Escala','Semanas', 'Semana Atual', 'Ações'];
+        $heads = ['Escala', 'Semanas', 'Semana Atual', 'Ações'];
 
         $config = [
             'data' => $scales,
@@ -27,13 +27,11 @@
                         <td>{{ $scale->current_week }}</td>
                         <td>
                             {{-- <a class="btn btn-xs btn-default text-primary mx-1 shadow"
-                                href="{{ route('role.edit', $scale->id) }}">
+                                href="{{ route('scale.edit', $scale->id) }}">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
-                            </a>
-                            @if($role->users->count() == 0)
-                            <x-modal url="{{ route('role.delete', $scale->id) }}" id="{{ $scale->id }}"
-                                name="{{ $role->name }}" />
-                            @endif --}}
+                            </a> --}}
+                            <x-modal url="{{ route('scale.delete', $scale->id) }}" id="{{ $scale->id }}"
+                                name="{{ $scale->name }}" />
                         </td>
                     </tr>
                 @endforeach

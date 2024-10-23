@@ -19,9 +19,9 @@ class ScaleRepository
         return $this->entity->get();
     }
 
-    public function createScale($request)
+    public function createScale(Scale $scale)
     {
-        $this->entity->create($request->all());
+        $scale->save();
     }
 
     function getScale($id)

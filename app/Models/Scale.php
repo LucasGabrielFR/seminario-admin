@@ -18,6 +18,19 @@ class Scale extends Model
         'name',
         'week',
         'current_week',
+        'status',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'scale_responsibles', 'scale_id', 'user_id')
+            ->using(ScaleResponsible::class);
+    }
+
+    public function functions()
+    {
+        return $this->belongsToMany(ScaleFunction::class, 'scale_responsibles', 'scale_id', 'function_id')
+            ->using(ScaleResponsible::class);
+    }
 
 }

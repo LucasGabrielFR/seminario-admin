@@ -75,4 +75,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'user_courses', 'user_id', 'course_id');
     }
+
+    public function scales()
+    {
+        return $this->belongsToMany(Scale::class, 'scale_responsibles', 'user_id', 'scale_id')
+            ->using(ScaleResponsible::class);
+    }
 }
