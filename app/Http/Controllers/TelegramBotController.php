@@ -143,7 +143,7 @@ class TelegramBotController extends Controller
 
         foreach ($scaleResponsibles as $scaleResponsible) {
             if ($scaleResponsible->function->id == '9c78b7c3-bfe0-4dd8-8cd0-13fa3773c1d1' && isset($scaleResponsible->user->chat_id)) {
-                $message = "Corre pra ligar a estufa se não vai todo mundo comer boia fria. \n\n Anda Logo meu filho!!!!";
+                $message = "Se for a semana de copa da sua turma pode correr pra ligar a estufa se não vai todo mundo comer boia fria. \n\n Anda Logo meu filho!!!!";
 
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
@@ -152,5 +152,15 @@ class TelegramBotController extends Controller
                 ]);
             }
         };
+    }
+
+    public function updateCurrentWeek()
+    {
+        $scaleRepository = new ScaleRepository(new Scale());
+        $scales = $scaleRepository->getAllScales();
+        foreach ($scales as $scale) {
+            $scale->current_week = $scale->current_week + 1;
+            $scale->save();
+        }
     }
 }

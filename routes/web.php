@@ -38,6 +38,7 @@ Route::get('/telegram/set-webhook', [TelegramBotController::class, 'setWebhook']
 Route::get('/telegram/send-scale-response-morning/{id}', [TelegramBotController::class, 'sendScaleResponseMorning']);
 Route::get('/telegram/send-scale-response-night/{id}', [TelegramBotController::class, 'sendScaleResponseNight']);
 Route::get('/telegram/send-reader-message/{id}', [TelegramBotController::class, 'sendReaderMessage']);
+Route::get('/telegram/update-current-week', [TelegramBotController::class, 'updateCurrentWeek']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');
