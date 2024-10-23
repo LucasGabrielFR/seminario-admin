@@ -28,7 +28,7 @@ class TelegramBotController extends Controller
                 break;
             default:
                 $chatId = $update->getMessage()->getChat()->getId();
-                $userName = $update->getMessage()->getFrom()->getFirstName();
+                $userName = $update->getMessage()->getFrom()->getFirstName() . ' ' . $update->getMessage()->getFrom()->getLastName();
 
                 // Responder com uma mensagem formatada
                 $message = "Olá *$userName*, eu sou o bot do Seminário São José. Irei repassar as informações necessárias para o Lucas, Obrigado!!.\n\n";
