@@ -25,12 +25,16 @@ class TelegramBotController extends Controller
                 break;
             default:
                 $chatId = $update->getMessage()->getChat()->getId();
+                $userName = $update->getMessage()->getFrom()->getFirstName();
 
-                // Responder com uma mensagem
+                // Responder com uma mensagem formatada
+                $message = "Olá *$userName*, eu sou o bot do Seminário São José. Irei lhe enviar o seu ChatID, por favor repasse ao Lucas para que ele possa atualizar o seu cadastro.\n\n";
+                $message .= "ChatID: `{$chatId}`"; // Usando Markdown para destacar o ChatID
+
                 $this->telegram->sendMessage([
                     'chat_id' => $chatId,
-                    'text' => "Olá" . $update->getMessage()->getFrom()->getFirstName() .
-                        ", eu sou o Telegram Bot. Irei lhe enviar o seu ChatID, por favor repasse ao Lucas para que ele possa atualizar o seu cadasto <br><br> ChatID: " . $update->getMessage()->getFrom()->getId(),
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
         }
     }
