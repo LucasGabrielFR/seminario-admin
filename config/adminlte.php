@@ -339,7 +339,7 @@ return [
             'text'    => 'Usuários',
             'icon'    => 'fas fa-fw fa-user',
             'url'  => 'admin/users',
-            'can' => ['admin','librarian'],
+            'can' => ['admin', 'librarian'],
         ],
         [
             'text'    => 'Empréstimos',
@@ -482,7 +482,7 @@ return [
                 [
                     'type' => 'css',
                     'asset' => true,
-                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0/select2-bootstrap4.min.css',
+                    'location' => 'https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css',
                 ],
             ],
         ],
