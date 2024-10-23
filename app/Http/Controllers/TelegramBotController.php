@@ -91,16 +91,42 @@ class TelegramBotController extends Controller
         $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
 
         foreach ($scaleResponsibles as $scaleResponsible) {
-            $name = $scaleResponsible->user->name;
-            $function = $scaleResponsible->function->name;
-            $message="Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n *$function*. \n\n Tenha um bom dia(Se puder)!";
+            if (isset($scaleResponsible->user->chat_id)) {
+                $name = $scaleResponsible->user->name;
+                $function = $scaleResponsible->function->name;
+                $message = "Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n *$function*. \n\n Tenha um bom dia(Se puder)!";
 
-            $this->telegram->sendMessage([
-                'chat_id' => $scaleResponsible->user->chat_id,
-                'text' => $message,
-                'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
-            ]);
+                $this->telegram->sendMessage([
+                    'chat_id' => $scaleResponsible->user->chat_id,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+            }
         };
+    }
 
+    public function sendReaderMessage($scaleId)
+    {
+        $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
+
+        $scaleReponseRepository = new ScaleResponsibleRepository(new ScaleResponsible());
+        $scaleRepository = new ScaleRepository(new Scale());
+
+        $scale = $scaleRepository->getScale($scaleId);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
+
+        foreach ($scaleResponsibles as $scaleResponsible) {
+            if ($scaleResponsible->function->id == '9c78b7c3-bfe0-4dd8-8cd0-13fa3773c1d1' && isset($scaleResponsible->user->chat_id)) {
+                $name = $scaleResponsible->user->name;
+                $function = $scaleResponsible->function->name;
+                $message = "Corre pra ligar a estufa se não vai todo mundo comer boia fria. \n\n Anda Logo, meu filho.";
+
+                $this->telegram->sendMessage([
+                    'chat_id' => $scaleResponsible->user->chat_id,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+            }
+        };
     }
 }

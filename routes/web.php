@@ -36,6 +36,7 @@ Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
 Route::post('/telegram/send-message', [TelegramBotController::class, 'sendCustomMessage']);
 Route::get('/telegram/set-webhook', [TelegramBotController::class, 'setWebhook']);
 Route::get('/telegram/send-scale-response/{id}', [TelegramBotController::class, 'sendScaleResponse']);
+Route::get('/telegram/send-reader-message/{id}', [TelegramBotController::class, 'sendReaderMessage']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');
