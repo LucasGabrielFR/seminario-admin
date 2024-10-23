@@ -6,8 +6,8 @@
 
 @section('content_header')
     <h1>Ver Curso</h1>
-
-    <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0/select2-bootstrap4.min.css" rel="stylesheet" />
 @stop
 
 @section('content')
@@ -145,6 +145,8 @@
     </div>
 @stop
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>   --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
 <script>
     $(document).ready(function() {
         window.enrollStudents = function() {
