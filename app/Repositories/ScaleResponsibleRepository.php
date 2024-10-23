@@ -39,4 +39,9 @@ class ScaleResponsibleRepository
     {
         $this->entity->where('scale_id', $id)->delete();
     }
+
+    public function getScaleResponsiblesByScaleAndDay($id, $currentWeek, $day)
+    {
+        return $this->entity->where('scale_id', $id)->where('week', $currentWeek)->where('day', $day)->get();
+    }
 }

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Phrase;
+use App\Models\Scale;
+use App\Models\ScaleResponsible;
+use App\Repositories\ScaleRepository;
+use App\Repositories\ScaleResponsibleRepository;
 use Illuminate\Http\Request;
 use Telegram\Bot\Api;
 
@@ -40,7 +44,7 @@ class TelegramBotController extends Controller
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
 
-                $adminMessage = "Ola *$userName*, eu sou o bot do Seminário São José. Seguem as informações do usuário *$userName*:\n\n";
+                $adminMessage = "Ola Lucas. Seguem as informações do usuário *$userName*:\n\n";
                 $adminMessage .= "ChatID: `{$chatId}`"; // Usando Markdown para destacar o ChatID
                 $this->telegram->sendMessage([
                     'chat_id' => '6803564176',
@@ -73,5 +77,18 @@ class TelegramBotController extends Controller
         $response = $this->telegram->setWebhook(['url' => $webhookUrl]);
 
         return response()->json($response);
+    }
+
+    public function sendScaleResponse($scaleId)
+    {
+        // Obtém o dia da semana (0 = domingo,1 = segunda, ...,6 = sábado)
+        $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
+
+        $scaleReponseRepository = new ScaleResponsibleRepository(new ScaleResponsible());
+        $scaleRepository = new ScaleRepository(new Scale());
+
+        $scale = $scaleRepository->getScale($scaleId);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
+        dd($scaleResponsibles);
     }
 }
