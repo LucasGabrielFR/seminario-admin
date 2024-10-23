@@ -79,6 +79,15 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">ChatID Telegram</label>
+                    <input type="text" class="form-control" name="chat_id" id="chat_id"
+                        value="{{ $user->chat_id ?? '' }}">
+                </div>
+            </div>
+        </div>
         <hr>
         @if ($loggedUser->permissions->contains('id', 1))
             <div class="row">

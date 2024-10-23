@@ -31,7 +31,8 @@ class User extends Authenticatable
         'city',
         'status',
         'photo',
-        'class'
+        'class',
+        'chat_id',
     ];
 
     /**

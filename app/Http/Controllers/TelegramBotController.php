@@ -29,7 +29,8 @@ class TelegramBotController extends Controller
                 // Responder com uma mensagem
                 $this->telegram->sendMessage([
                     'chat_id' => $chatId,
-                    'text' => "Você disse: " . $text,
+                    'text' => "Olá" . $update->getMessage()->getFrom()->getFirstName() .
+                        ", eu sou o Telegram Bot. Irei lhe enviar o seu ChatID, por favor repasse ao Lucas para que ele possa atualizar o seu cadasto <br><br> ChatID: " . $update->getMessage()->getFrom()->getId(),
                 ]);
         }
     }
