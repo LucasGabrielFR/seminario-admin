@@ -89,6 +89,10 @@ class TelegramBotController extends Controller
 
         $scale = $scaleRepository->getScale($scaleId);
         $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
-        dd($scaleResponsibles);
+        $message = '';
+        foreach ($scaleResponsibles as $scaleResponsible) {
+            $message .= $scaleResponsible->user->name . ' - ' . $scaleResponsible->function->name . "\n";
+        };
+        dd($message);
     }
 }
