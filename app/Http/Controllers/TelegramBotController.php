@@ -121,7 +121,7 @@ class TelegramBotController extends Controller
                 $name = $scaleResponsible->user->name;
                 $function = $scaleResponsible->function->name;
                 $message = "Boa noite caro *$name*, no dia de amanhã você será responsável pela função de: \n\n !!!!*$function*!!!! \n\n Boa noite! Espero que seus sonhos sejam tão bons quanto sua vida de oração!";
-                dd($message);
+
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
                     'text' => $message,
