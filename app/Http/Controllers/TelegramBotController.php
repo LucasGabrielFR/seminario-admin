@@ -92,7 +92,8 @@ class TelegramBotController extends Controller
 
         foreach ($scaleResponsibles as $scaleResponsible) {
             $message="Acorda logo meu filho, o sino já bateu, hoje para sua alegria vossa senhoria *{$scaleResponsible->user->name}*, será responsável pela função de *{$scaleResponsible->function->name}*. Tenha um bom dia(Se puder)!";
-            dd($message);
+
+            $this->sendMessage($scaleResponsible->user->chat_id, $message);
         };
 
     }
