@@ -89,10 +89,11 @@ class TelegramBotController extends Controller
 
         $scale = $scaleRepository->getScale($scaleId);
         $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
-        $message = '';
+
         foreach ($scaleResponsibles as $scaleResponsible) {
-            $message .= $scaleResponsible->user->name . ' - ' . $scaleResponsible->function->name . "\n";
+            $message="Acorda logo meu filho, o sino já bateu, hoje para sua alegria vossa senhoria *{$scaleResponsible->user->name}*, será responsável pela função de *{$scaleResponsible->function->name}*. Tenha um bom dia(Se puder)!";
+            dd($message);
         };
-        dd($message);
+
     }
 }
