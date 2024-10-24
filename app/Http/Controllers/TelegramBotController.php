@@ -191,7 +191,8 @@ class TelegramBotController extends Controller
         }
     }
 
-    public function sendLateLoansMessage(){
+    public function sendLateLoansMessage()
+    {
         $loansRepository = new LoanRepository(new Loan());
 
         $loans = $loansRepository->getLateLoans();
@@ -205,16 +206,18 @@ class TelegramBotController extends Controller
             $dateLimit = date('d/m/Y', strtotime($dateLimit));
             $message = "Caríssimo $name, você tem um empréstimo atrasado desde o dia $dateLimit !! Não seja um caloteiro, devolva o livro:  \n\n $title";
 
-            $this->telegram->sendMessage([
-                'chat_id' => $user->chat_id,
-                'text' => $message,
-                'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
-            ]);
+            if (isset($user->chat_id)) {
+                $this->telegram->sendMessage([
+                    'chat_id' => $user->chat_id,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
 
-            Log::create([
-                'description' => "Empréstimo atrasado: $name. Livro: $title. Data limite: $dateLimit.",
-                'action' => 'Mensagem Telegram enviada',
-            ]);
+                Log::create([
+                    'description' => "Empréstimo atrasado: $name. Livro: $title. Data limite: $dateLimit.",
+                    'action' => 'Mensagem Telegram enviada',
+                ]);
+            }
         }
     }
 }
