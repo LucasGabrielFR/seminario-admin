@@ -161,7 +161,9 @@ class TelegramBotController extends Controller
                     'text' => $message,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
+
                 $name = $scaleResponsible->user->name;
+
                 Log::create([
                     'description' => "Resposta enviada para: $name. Mensagem da estufa",
                     'action' => 'Mensagem Telegram enviada',
