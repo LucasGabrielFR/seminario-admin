@@ -104,7 +104,7 @@ class TelegramBotController extends Controller
                 ]);
 
                 Log::create([
-                    'description' => "Resposta enviada para: $name. Mensagem: $message",
+                    'description' => "Resposta enviada para: $name. Mensagem da Manhã. Funcão: $function.",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
@@ -135,7 +135,7 @@ class TelegramBotController extends Controller
                 ]);
 
                 Log::create([
-                    'description' => "Resposta enviada para: $name. Mensagem: $message",
+                    'description' => "Resposta enviada para: $name. Mensagem da Noite. Funcão: $function.",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
@@ -161,9 +161,9 @@ class TelegramBotController extends Controller
                     'text' => $message,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
-
+                $name = $scaleResponsible->user->name;
                 Log::create([
-                    'description' => "Resposta enviada para: " . $scaleResponsible->user->name . "Mensagem: $message",
+                    'description' => "Resposta enviada para: $name. Mensagem da estufa",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
