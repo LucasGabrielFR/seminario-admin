@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Phrase;
 use App\Models\Scale;
 use App\Models\ScaleResponsible;
@@ -101,6 +102,11 @@ class TelegramBotController extends Controller
                     'text' => $message,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
+
+                Log::create([
+                    'description' => "Resposta enviada para: $name. Mensagem: $message",
+                    'action' => 'Mensagem Telegram enviada',
+                ]);
             }
         };
     }
@@ -127,6 +133,11 @@ class TelegramBotController extends Controller
                     'text' => $message,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
+
+                Log::create([
+                    'description' => "Resposta enviada para: $name. Mensagem: $message",
+                    'action' => 'Mensagem Telegram enviada',
+                ]);
             }
         };
     }
@@ -149,6 +160,11 @@ class TelegramBotController extends Controller
                     'chat_id' => $scaleResponsible->user->chat_id,
                     'text' => $message,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+
+                Log::create([
+                    'description' => "Resposta enviada para: " . $scaleResponsible->user->name . "Mensagem: $message",
+                    'action' => 'Mensagem Telegram enviada',
                 ]);
             }
         };
