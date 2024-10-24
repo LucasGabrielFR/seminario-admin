@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
 use App\Models\Log;
 use App\Models\Phrase;
 use App\Models\Scale;
 use App\Models\ScaleResponsible;
+use App\Repositories\LoanRepository;
 use App\Repositories\ScaleRepository;
 use App\Repositories\ScaleResponsibleRepository;
 use Illuminate\Http\Request;
@@ -104,7 +106,7 @@ class TelegramBotController extends Controller
                 ]);
 
                 Log::create([
-                    'description' => "Resposta enviada para: $name. Mensagem da Manhã. Funcão: $function.",
+                    'description' => "Função do dia enviada para: $name. Mensagem da Manhã. Funcão: $function.",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
@@ -135,7 +137,7 @@ class TelegramBotController extends Controller
                 ]);
 
                 Log::create([
-                    'description' => "Resposta enviada para: $name. Mensagem da Noite. Funcão: $function.",
+                    'description' => "Função do dia seguinte enviada para: $name. Mensagem da Noite. Funcão: $function.",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
@@ -165,7 +167,7 @@ class TelegramBotController extends Controller
                 $name = $scaleResponsible->user->name;
 
                 Log::create([
-                    'description' => "Resposta enviada para: $name. Mensagem da estufa",
+                    'description' => "Mensagem de lembrete para: $name. Mensagem da estufa",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
@@ -186,6 +188,33 @@ class TelegramBotController extends Controller
                 $scale->current_week = $scale->current_week + 1;
                 $scale->save();
             }
+        }
+    }
+
+    public function sendLateLoansMessage(){
+        $loansRepository = new LoanRepository(new Loan());
+
+        $loans = $loansRepository->getLateLoans();
+
+        foreach ($loans as $loan) {
+            $user = $loan->user;
+            $name = $user->name;
+            $book = $loan->book;
+            $title = $book->name;
+            $dateLimit = $loan->date_limit;
+            $dateLimit = date('d/m/Y', strtotime($dateLimit));
+            $message = "Caríssimo $name, você tem um empréstimo atrasado desde o dia $dateLimit !! Não seja um caloteiro, devolva o livro:  \n\n $title";
+
+            $this->telegram->sendMessage([
+                'chat_id' => $user->chat_id,
+                'text' => $message,
+                'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+            ]);
+
+            Log::create([
+                'description' => "Empréstimo atrasado: $name. Livro: $title. Data limite: $dateLimit.",
+                'action' => 'Mensagem Telegram enviada',
+            ]);
         }
     }
 }

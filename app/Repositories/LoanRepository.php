@@ -70,4 +70,9 @@ class LoanRepository
 
         return $this->entity->find($id);
     }
+
+    public function getLateLoans()
+    {
+        return $this->entity->where('status', 1)->where('date_limit', '<', date('Y-m-d'))->get();
+    }
 }
