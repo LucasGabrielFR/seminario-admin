@@ -295,7 +295,7 @@ class TelegramBotController extends Controller
                 ]);
 
                 Log::create([
-                    'description' => "Escala geral enviada para: $name. Mensagem da Noite.",
+                    'description' => "Escala geral enviada para: $name. Mensagem da Manhã.",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }
