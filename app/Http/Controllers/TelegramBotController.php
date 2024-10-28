@@ -7,6 +7,7 @@ use App\Models\Log;
 use App\Models\Phrase;
 use App\Models\Scale;
 use App\Models\ScaleResponsible;
+use App\Models\User;
 use App\Repositories\LoanRepository;
 use App\Repositories\ScaleRepository;
 use App\Repositories\ScaleResponsibleRepository;
@@ -215,6 +216,86 @@ class TelegramBotController extends Controller
 
                 Log::create([
                     'description' => "Empréstimo atrasado: $name. Livro: $title. Data limite: $dateLimit.",
+                    'action' => 'Mensagem Telegram enviada',
+                ]);
+            }
+        }
+    }
+
+    public function sendAllFunctionsNightMessage($scaleId)
+    {
+        $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
+
+        $scaleReponseRepository = new ScaleResponsibleRepository(new ScaleResponsible());
+        $scaleRepository = new ScaleRepository(new Scale());
+
+        $scale = $scaleRepository->getScale($scaleId);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek + 1);
+
+        $group = $scaleReponseRepository->getScaleResponsibleGroup($scaleId);
+
+        $message = "";
+        $message .= "Boa noite Zé Perequete, segue a escala geral de amanhã: \n\n";
+        foreach ($scaleResponsibles as $scaleResponsible) {
+            if (isset($scaleResponsible->user)) {
+                $name = $scaleResponsible->user->name;
+                $function = $scaleResponsible->function->name;
+
+                $message .= "*$name* - $function \n";
+            }
+        };
+
+        foreach ($group as $member) {
+            if (isset($member->user->chat_id)) {
+                $name = $member->user->name;
+                $this->telegram->sendMessage([
+                    'chat_id' => $member->user->chat_id,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+
+                Log::create([
+                    'description' => "Escala geral enviada para: $name. Mensagem da Noite.",
+                    'action' => 'Mensagem Telegram enviada',
+                ]);
+            }
+        }
+    }
+
+    public function sendAllFunctionsMorningMessage($scaleId)
+    {
+        $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
+
+        $scaleReponseRepository = new ScaleResponsibleRepository(new ScaleResponsible());
+        $scaleRepository = new ScaleRepository(new Scale());
+
+        $scale = $scaleRepository->getScale($scaleId);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
+
+        $group = $scaleReponseRepository->getScaleResponsibleGroup($scaleId);
+
+        $message = "";
+        $message .= "Boa dia projeto de padre, segue a escala geral de hoje: \n\n";
+        foreach ($scaleResponsibles as $scaleResponsible) {
+            if (isset($scaleResponsible->user)) {
+                $name = $scaleResponsible->user->name;
+                $function = $scaleResponsible->function->name;
+
+                $message .= "*$name* - $function \n";
+            }
+        };
+
+        foreach ($group as $member) {
+            if (isset($member->user->chat_id)) {
+                $name = $member->user->name;
+                $this->telegram->sendMessage([
+                    'chat_id' => $member->user->chat_id,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+
+                Log::create([
+                    'description' => "Escala geral enviada para: $name. Mensagem da Noite.",
                     'action' => 'Mensagem Telegram enviada',
                 ]);
             }

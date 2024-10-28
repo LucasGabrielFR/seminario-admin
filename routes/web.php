@@ -40,6 +40,8 @@ Route::get('/telegram/send-scale-response-night/{id}', [TelegramBotController::c
 Route::get('/telegram/send-reader-message/{id}', [TelegramBotController::class, 'sendReaderMessage']);
 Route::get('/telegram/update-current-week', [TelegramBotController::class, 'updateCurrentWeek']);
 Route::get('/telegram/send-late-loans-message', [TelegramBotController::class, 'sendLateLoansMessage']);
+Route::get('/telegram/send-all-functions-night/{id}', [TelegramBotController::class, 'sendAllFunctionsNightMessage']);
+Route::get('/telegram/send-all-functions-morning/{id}', [TelegramBotController::class, 'sendAllFunctionsMorningMessage']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');

@@ -44,4 +44,10 @@ class ScaleResponsibleRepository
     {
         return $this->entity->where('scale_id', $id)->where('week', $currentWeek)->where('day', $day)->get();
     }
+
+    public function getScaleResponsibleGroup($id)
+    {
+        $users = $this->entity->where('scale_id', $id)->get();
+        return $users->unique('user_id')->values();
+    }
 }
