@@ -245,20 +245,27 @@ class TelegramBotController extends Controller
             }
         };
 
-        foreach ($group as $member) {
-            if (isset($member->user->chat_id)) {
-                $name = $member->user->name;
-                $this->telegram->sendMessage([
-                    'chat_id' => $member->user->chat_id,
-                    'text' => $message,
-                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
-                ]);
+        try {
+            foreach ($group as $member) {
+                if (isset($member->user->chat_id)) {
+                    $name = $member->user->name;
+                    $this->telegram->sendMessage([
+                        'chat_id' => $member->user->chat_id,
+                        'text' => $message,
+                        'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                    ]);
 
-                Log::create([
-                    'description' => "Escala geral enviada para: $name. Mensagem da Noite.",
-                    'action' => 'Mensagem Telegram enviada',
-                ]);
+                    Log::create([
+                        'description' => "Escala geral enviada para: $name. Mensagem da Noite.",
+                        'action' => 'Mensagem Telegram enviada',
+                    ]);
+                }
             }
+        } catch (\Exception $e) {
+            Log::create([
+                'description' => "Escala geral enviada para: $name. Mensagem da Noite. Erro: $e",
+                'action' => 'Falha ao Enviar Mensagem',
+            ]);
         }
     }
 
@@ -285,20 +292,29 @@ class TelegramBotController extends Controller
             }
         };
 
-        foreach ($group as $member) {
-            if (isset($member->user->chat_id)) {
-                $name = $member->user->name;
-                $this->telegram->sendMessage([
-                    'chat_id' => $member->user->chat_id,
-                    'text' => $message,
-                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
-                ]);
+        try{
+            foreach ($group as $member) {
+                if (isset($member->user->chat_id) && isset($member->user->name)) {
 
-                Log::create([
-                    'description' => "Escala geral enviada para: $name. Mensagem da Manhã.",
-                    'action' => 'Mensagem Telegram enviada',
-                ]);
+                    $name = $member->user->name;
+                    $this->telegram->sendMessage([
+                        'chat_id' => $member->user->chat_id,
+                        'text' => $message,
+                        'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                    ]);
+
+                    Log::create([
+                        'description' => "Escala geral enviada para: $name. Mensagem da Manhã.",
+                        'action' => 'Mensagem Telegram enviada',
+                    ]);
+                }
             }
+        } catch (\Exception $e) {
+            Log::create([
+                'description' => "Escala geral enviada para: $name. Mensagem da Manhã. Erro: $e",
+                'action' => 'Falha ao Enviar Mensagem',
+            ]);
         }
+
     }
 }
