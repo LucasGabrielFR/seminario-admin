@@ -282,7 +282,7 @@ class TelegramBotController extends Controller
         $group = $scaleReponseRepository->getScaleResponsibleGroup($scaleId);
 
         $message = "";
-        $message .= "Boa dia projeto de padre, segue a escala geral de hoje: \n\n";
+        $message .= "Bom dia projeto de padre, segue a escala geral de hoje: \n\n";
         foreach ($scaleResponsibles as $scaleResponsible) {
             if (isset($scaleResponsible->user)) {
                 $name = $scaleResponsible->user->name;
