@@ -117,11 +117,14 @@ class TelegramBotController extends Controller
         $scale = $scaleRepository->getScale($scaleId);
         $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
 
+        $randomPhrase = Phrase::inRandomOrder()->first();
+
         foreach ($scaleResponsibles as $scaleResponsible) {
             if (isset($scaleResponsible->user->chat_id)) {
                 $name = $scaleResponsible->user->name;
                 $function = $scaleResponsible->function->name;
-                $message = "Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n !!!!*$function*!!!! \n\n Tenha um bom dia(Se puder)!";
+                $message = "Acorda logo meu filho, o sino já bateu, hoje para sua alegria, vossa senhoria *$name*, será responsável pela função de: \n\n !!!!*$function*!!!! \n\n";
+                $message .= '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author;
 
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
@@ -148,11 +151,14 @@ class TelegramBotController extends Controller
         $scale = $scaleRepository->getScale($scaleId);
         $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek + 1);
 
+        $randomPhrase = Phrase::inRandomOrder()->first();
+
         foreach ($scaleResponsibles as $scaleResponsible) {
             if (isset($scaleResponsible->user->chat_id)) {
                 $name = $scaleResponsible->user->name;
                 $function = $scaleResponsible->function->name;
-                $message = "Boa noite caro *$name*, no dia de amanhã você será responsável pela função de: \n\n !!!!*$function*!!!! \n\n Boa noite! Espero que seus sonhos sejam tão bons quanto sua vida de oração!";
+                $message = "Boa noite caro *$name*, no dia de amanhã você será responsável pela função de: \n\n !!!!*$function*!!!! \n\n ";
+                $message .= '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author; // Usando Markdown para destacar o ChatID
 
                 $this->telegram->sendMessage([
                     'chat_id' => $scaleResponsible->user->chat_id,
@@ -255,6 +261,8 @@ class TelegramBotController extends Controller
         $scale = $scaleRepository->getScale($scaleId);
         $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek + 1);
 
+        $randomPhrase = Phrase::inRandomOrder()->first();
+
         $group = $scaleReponseRepository->getScaleResponsibleGroup($scaleId);
 
         $message = "";
@@ -267,6 +275,8 @@ class TelegramBotController extends Controller
                 $message .= "*$name* - $function \n";
             }
         };
+
+        $message .= "\n\n" . $randomPhrase->phrase . "\n\n" . $randomPhrase->author;
 
         try {
             foreach ($group as $member) {
@@ -304,6 +314,8 @@ class TelegramBotController extends Controller
 
         $group = $scaleReponseRepository->getScaleResponsibleGroup($scaleId);
 
+        $randomPhrase = Phrase::inRandomOrder()->first();
+
         $message = "";
         $message .= "Bom dia projeto de padre, segue a escala geral de hoje: \n\n";
         foreach ($scaleResponsibles as $scaleResponsible) {
@@ -314,6 +326,8 @@ class TelegramBotController extends Controller
                 $message .= "*$name* - $function \n";
             }
         };
+
+        $message .= "\n\n" . $randomPhrase->phrase . "\n\n" . $randomPhrase->author;
 
         try {
             foreach ($group as $member) {
