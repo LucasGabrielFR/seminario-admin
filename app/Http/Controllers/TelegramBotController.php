@@ -29,30 +29,45 @@ class TelegramBotController extends Controller
         $text = $update->getMessage()->getText();
 
         $randomPhrase = Phrase::inRandomOrder()->first();
+        $chatId = $update->getMessage()->getChat()->getId();
 
         switch ($text) {
             case '/ajuda':
-                $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado');
+                $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado, /cadastro, /frases');
                 break;
-            default:
-                $chatId = $update->getMessage()->getChat()->getId();
+            case '/propedeutico':
+                break;
+            case '/discipulado':
+                break;
+            case '/cadastro':
                 $userName = $update->getMessage()->getFrom()->getFirstName() . ' ' . $update->getMessage()->getFrom()->getLastName();
 
-                // Responder com uma mensagem formatada
-                $message = "Olá *$userName*, eu sou o bot do Seminário São José. Irei repassar as informações necessárias para o Lucas, Obrigado!!.\n\n";
+                $message = "Ola *$userName*. Seus dados serão enviados ao adminstrador. Obrigado!!\n\n";
                 $message .= '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author; // Usando Markdown para destacar o ChatID
-
-                $this->telegram->sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => $message,
-                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
-                ]);
 
                 $adminMessage = "Ola Lucas. Seguem as informações do usuário *$userName*:\n\n";
                 $adminMessage .= "ChatID: `{$chatId}`"; // Usando Markdown para destacar o ChatID
                 $this->telegram->sendMessage([
                     'chat_id' => '6803564176',
                     'text' => $adminMessage,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+                break;
+            case '/frases':
+                $this->sendMessage($update->getMessage()->getChat()->getId(), '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author);
+                break;
+            default:
+                $userName = $update->getMessage()->getFrom()->getFirstName() . ' ' . $update->getMessage()->getFrom()->getLastName();
+
+                // Responder com uma mensagem formatada
+                $message = "Olá *$userName*, eu sou o bot do Seminário São José. Estou aqui para te auxiliar.\n\n";
+                $message .= "Caso seja sua primeira vez por aqui, use o comando /cadastro para que o adminstrador te adicione no sistema de mensagens automáticas.\n\n";
+                $message .= "Caso queira saber mais sobre o bot, use o comando /ajuda.\n\n";
+                $message .= '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author; // Usando Markdown para destacar o ChatID
+
+                $this->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $message,
                     'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
                 ]);
         }
