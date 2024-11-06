@@ -36,8 +36,10 @@ class TelegramBotController extends Controller
                 $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado, /cadastro, /frases');
                 break;
             case '/propedeutico':
+                $this->sendScale('92319507-326b-4675-8422-323a15ee8341', 'Propedeutico', $chatId);
                 break;
             case '/discipulado':
+                $this->sendScale('916fddb3-8d04-4317-baec-45f167abf4ed', 'Discipulado', $chatId);
                 break;
             case '/cadastro':
                 $userName = $update->getMessage()->getFrom()->getFirstName() . ' ' . $update->getMessage()->getFrom()->getLastName();
@@ -313,7 +315,7 @@ class TelegramBotController extends Controller
             }
         };
 
-        try{
+        try {
             foreach ($group as $member) {
                 if (isset($member->user->chat_id) && isset($member->user->name)) {
 
@@ -336,6 +338,33 @@ class TelegramBotController extends Controller
                 'action' => 'Falha ao Enviar Mensagem',
             ]);
         }
+    }
 
+    private function sendScale($scaleId, $scaleName, $chatId)
+    {
+        $dayOfWeek = date('w'); // 'w' retorna o índice do dia da semana // Exibe a data atual e o dia da semana dd([
+
+        $scaleReponseRepository = new ScaleResponsibleRepository(new ScaleResponsible());
+        $scaleRepository = new ScaleRepository(new Scale());
+
+        $scale = $scaleRepository->getScale($scaleId);
+        $scaleResponsibles = $scaleReponseRepository->getScaleResponsiblesByScaleAndDay($scaleId, $scale->current_week, $dayOfWeek);
+
+        $message = "";
+        $message .= "Olá, segue a escala da turma *$scaleName*: \n\n";
+        foreach ($scaleResponsibles as $scaleResponsible) {
+            if (isset($scaleResponsible->user)) {
+                $name = $scaleResponsible->user->name;
+                $function = $scaleResponsible->function->name;
+
+                $message .= "*$name* - $function \n";
+            }
+        };
+
+        $this->telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+        ]);
     }
 }
