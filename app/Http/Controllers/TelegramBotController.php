@@ -45,6 +45,12 @@ class TelegramBotController extends Controller
                 $message = "Ola *$userName*. Seus dados serão enviados ao adminstrador. Obrigado!!\n\n";
                 $message .= '"' . $randomPhrase->phrase . '"' . "\n\n" . $randomPhrase->author; // Usando Markdown para destacar o ChatID
 
+                $this->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                ]);
+
                 $adminMessage = "Ola Lucas. Seguem as informações do usuário *$userName*:\n\n";
                 $adminMessage .= "ChatID: `{$chatId}`"; // Usando Markdown para destacar o ChatID
                 $this->telegram->sendMessage([
