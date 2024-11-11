@@ -1,6 +1,6 @@
 <?php
 // URL para a requisição GET
-$url = "https://seminario.acutisroad.com.br/telegram/send-reader-message/916fddb3-8d04-4317-baec-45f167abf4ed";
+$url = "https://seminario.acutisroad.com.br/telegram/send-reader-message";
 
 // Inicializa a sessão cURL
 $ch = curl_init();

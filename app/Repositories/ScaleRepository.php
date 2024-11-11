@@ -29,6 +29,11 @@ class ScaleRepository
         return $this->entity->find($id);
     }
 
+    function getActiveScales()
+    {
+        return $this->entity->where('status', 1)->get();
+    }
+
     function updateScale(Request $request, $id)
     {
         $scale = $this->entity->find($id);
