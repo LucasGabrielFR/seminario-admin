@@ -136,7 +136,6 @@ class TelegramBotController extends Controller
             if (isset($scaleResponsible->user->chat_id)) {
                 $name = $scaleResponsible->user->name;
                 $function = $scaleResponsible->function->name;
-                dd($function);
 
                 $message = $this->generateResponsibilityMessage($name, $function, $randomPhrase, $shiftDay);
 
