@@ -35,13 +35,13 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
 Route::post('/telegram/send-message', [TelegramBotController::class, 'sendCustomMessage']);
 Route::get('/telegram/set-webhook', [TelegramBotController::class, 'setWebhook']);
-Route::get('/telegram/send-scale-response-morning/{id}', [TelegramBotController::class, 'sendScaleResponseMorning']);
-Route::get('/telegram/send-scale-response-night/{id}', [TelegramBotController::class, 'sendScaleResponseNight']);
-Route::get('/telegram/send-reader-message/{id}', [TelegramBotController::class, 'sendReaderMessage']);
+Route::get('/telegram/send-scale-response-morning', [TelegramBotController::class, 'sendScaleResponseMorning']);
+Route::get('/telegram/send-scale-response-night', [TelegramBotController::class, 'sendScaleResponseNight']);
+Route::get('/telegram/send-reader-message', [TelegramBotController::class, 'sendReaderMessage']);
 Route::get('/telegram/update-current-week', [TelegramBotController::class, 'updateCurrentWeek']);
 Route::get('/telegram/send-late-loans-message', [TelegramBotController::class, 'sendLateLoansMessage']);
-Route::get('/telegram/send-all-functions-night/{id}', [TelegramBotController::class, 'sendAllFunctionsNightMessage']);
-Route::get('/telegram/send-all-functions-morning/{id}', [TelegramBotController::class, 'sendAllFunctionsMorningMessage']);
+Route::get('/telegram/send-all-functions-night', [TelegramBotController::class, 'sendAllFunctionsNightMessage']);
+Route::get('/telegram/send-all-functions-morning', [TelegramBotController::class, 'sendAllFunctionsMorningMessage']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('home');
