@@ -131,7 +131,7 @@ class TelegramBotController extends Controller
     {
         $scaleResponsibles = $this->scaleResponsibleRepository->getScaleResponsiblesByScaleAndDay($scale->id, $scale->current_week, $shiftDay);
         $randomPhrase = Phrase::inRandomOrder()->first();
-
+        dd($scaleResponsibles);
         foreach ($scaleResponsibles as $scaleResponsible) {
             if (isset($scaleResponsible->user->chat_id)) {
                 $name = $scaleResponsible->user->name;
