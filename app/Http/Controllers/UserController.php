@@ -45,9 +45,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = $request->all();
+        $loggedUser = Auth::user();
 
         $user['status'] = 1;
-        $user['password'] = Hash::make($user['password']);
+        if ($loggedUser->permissions->contains('id', 1)) {
+            $user['password'] = Hash::make($user['password']);
+        } else {
+            $user['password'] = Hash::make('123456');
+        }
 
         $permissions = $user['permissions'];
         unset($user['permissions']);
@@ -105,7 +110,7 @@ class UserController extends Controller
             foreach ($permissions as $permission) {
                 $userPermission->create($id, $permission);
             }
-        } else if($loggedUser->permissions->contains('id', 1)) {
+        } else if ($loggedUser->permissions->contains('id', 1)) {
             $userPermission->deleteByUser($id);
         }
 
