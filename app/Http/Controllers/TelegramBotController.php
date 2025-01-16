@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config as ModelsConfig;
 use App\Models\Loan;
 use App\Models\Log;
 use App\Models\Phrase;
 use App\Models\Scale;
 use App\Models\ScaleResponsible;
 use App\Models\User;
+use App\Repositories\ConfigRepository;
 use App\Repositories\LoanRepository;
 use App\Repositories\ScaleRepository;
 use App\Repositories\ScaleResponsibleRepository;
 use Illuminate\Http\Request;
+use PSpell\Config;
 use Telegram\Bot\Api;
 
 class TelegramBotController extends Controller
@@ -83,10 +86,15 @@ class TelegramBotController extends Controller
 
     public function sendMessage($chatId, $message)
     {
-        $this->telegram->sendMessage([
-            'chat_id' => $chatId,
-            'text' => $message,
-        ]);
+        $configRepo = new ConfigRepository(new ModelsConfig());
+        $sendTelegramMessageConfig = $configRepo->getSendTelegramMessageConfig();
+
+        if ($sendTelegramMessageConfig->value == 1) {
+            $this->telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => $message,
+            ]);
+        }
     }
 
     public function sendCustomMessage(Request $request)
