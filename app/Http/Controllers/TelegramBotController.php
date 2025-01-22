@@ -244,30 +244,35 @@ class TelegramBotController extends Controller
 
     public function sendLateLoansMessage()
     {
-        $loansRepository = new LoanRepository(new Loan());
+        $configRepo = new ConfigRepository(new ModelsConfig());
+        $sendTelegramMessageConfig = $configRepo->getSendTelegramMessageConfig();
 
-        $loans = $loansRepository->getLateLoans();
+        if ($sendTelegramMessageConfig->value == 1) {
+            $loansRepository = new LoanRepository(new Loan());
 
-        foreach ($loans as $loan) {
-            $user = $loan->user;
-            $name = $user->name;
-            $book = $loan->book;
-            $title = $book->name;
-            $dateLimit = $loan->date_limit;
-            $dateLimit = date('d/m/Y', strtotime($dateLimit));
-            $message = "Caríssimo $name, você tem um empréstimo atrasado desde o dia $dateLimit !! Não seja um caloteiro, devolva o livro:  \n\n $title";
+            $loans = $loansRepository->getLateLoans();
 
-            if (isset($user->chat_id)) {
-                $this->telegram->sendMessage([
-                    'chat_id' => $user->chat_id,
-                    'text' => $message,
-                    'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
-                ]);
+            foreach ($loans as $loan) {
+                $user = $loan->user;
+                $name = $user->name;
+                $book = $loan->book;
+                $title = $book->name;
+                $dateLimit = $loan->date_limit;
+                $dateLimit = date('d/m/Y', strtotime($dateLimit));
+                $message = "Caríssimo $name, você tem um empréstimo atrasado desde o dia $dateLimit !! Não seja um caloteiro, devolva o livro:  \n\n $title";
 
-                Log::create([
-                    'description' => "Empréstimo atrasado: $name. Livro: $title. Data limite: $dateLimit.",
-                    'action' => 'Mensagem Telegram enviada',
-                ]);
+                if (isset($user->chat_id)) {
+                    $this->telegram->sendMessage([
+                        'chat_id' => $user->chat_id,
+                        'text' => $message,
+                        'parse_mode' => 'Markdown', // Definindo o modo de parse para Markdown
+                    ]);
+
+                    Log::create([
+                        'description' => "Empréstimo atrasado: $name. Livro: $title. Data limite: $dateLimit.",
+                        'action' => 'Mensagem Telegram enviada',
+                    ]);
+                }
             }
         }
     }
