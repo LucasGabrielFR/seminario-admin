@@ -53,12 +53,12 @@ class UserController extends Controller
         } else {
             $user['password'] = Hash::make('123456');
         }
-
+        
+        $userCreated = $this->repository->createUser($user);
         if (isset($user['permissions'])) {
             $permissions = $user['permissions'];
             unset($user['permissions']);
 
-            $userCreated = $this->repository->createUser($user);
             $userPermission = new UserPermissionRepository(new UserPermission());
 
             foreach ($permissions as $permission) {
