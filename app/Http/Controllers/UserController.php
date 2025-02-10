@@ -54,14 +54,16 @@ class UserController extends Controller
             $user['password'] = Hash::make('123456');
         }
 
-        $permissions = $user['permissions'];
-        unset($user['permissions']);
+        if (isset($user['permissions'])) {
+            $permissions = $user['permissions'];
+            unset($user['permissions']);
 
-        $userCreated = $this->repository->createUser($user);
-        $userPermission = new UserPermissionRepository(new UserPermission());
+            $userCreated = $this->repository->createUser($user);
+            $userPermission = new UserPermissionRepository(new UserPermission());
 
-        foreach ($permissions as $permission) {
-            $userPermission->create($userCreated->id, $permission);
+            foreach ($permissions as $permission) {
+                $userPermission->create($userCreated->id, $permission);
+            }
         }
 
         return redirect()->route('users');
@@ -98,20 +100,22 @@ class UserController extends Controller
             unset($request['password']);
         }
 
-        $userPermission = new UserPermissionRepository(new UserPermission());
-
         if (isset($user['permissions'])) {
-            $permissions = $user['permissions'];
-            unset($user['permissions']);
+            $userPermission = new UserPermissionRepository(new UserPermission());
+
+            if (isset($user['permissions'])) {
+                $permissions = $user['permissions'];
+                unset($user['permissions']);
 
 
-            $userPermission->deleteByUser($id);
+                $userPermission->deleteByUser($id);
 
-            foreach ($permissions as $permission) {
-                $userPermission->create($id, $permission);
+                foreach ($permissions as $permission) {
+                    $userPermission->create($id, $permission);
+                }
+            } else if ($loggedUser->permissions->contains('id', 1)) {
+                $userPermission->deleteByUser($id);
             }
-        } else if ($loggedUser->permissions->contains('id', 1)) {
-            $userPermission->deleteByUser($id);
         }
 
         if (!$user)
