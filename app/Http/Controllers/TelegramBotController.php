@@ -39,10 +39,10 @@ class TelegramBotController extends Controller
                 $this->sendMessage($update->getMessage()->getChat()->getId(), 'Aqui estão os comandos disponíveis: /ajuda, /propedeutico, /discipulado, /cadastro, /frases');
                 break;
             case '/propedeutico':
-                $this->sendScale('92319507-326b-4675-8422-323a15ee8341', 'Propedeutico', $chatId);
+                // $this->sendScale('92319507-326b-4675-8422-323a15ee8341', 'Propedeutico', $chatId);
                 break;
             case '/discipulado':
-                $this->sendScale('916fddb3-8d04-4317-baec-45f167abf4ed', 'Discipulado', $chatId);
+                $this->sendScale('c3fdcda2-b9d6-49b9-87d4-ecbb120019a1', 'Discipulado', $chatId);
                 break;
             case '/cadastro':
                 $userName = $update->getMessage()->getFrom()->getFirstName() . ' ' . $update->getMessage()->getFrom()->getLastName();
